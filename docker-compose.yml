@@ -1,0 +1,20 @@
+version: '3.7'
+
+services:
+  api:
+    image: btg/teste-pratico
+    container_name: api-teste-pratico
+    build:
+      context: .
+      target: build
+    env_file: .env
+    ports:
+      - ${PORT}:${PORT}
+    volumes:
+      - ./:/home/node/app:delegated
+    networks:
+      - teste-pratico-net
+    command: yarn dev
+
+networks:
+  teste-pratico-net:
