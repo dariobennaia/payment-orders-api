@@ -4,11 +4,6 @@
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
     "module": "commonjs",
-    "rootDir": "./src",
-    "typeRoots": [
-      "./node_module/@types",
-      "./src/@types"
-    ],
     "resolveJsonModule": true,
     "allowJs": true,
     "outDir": "./dist",
