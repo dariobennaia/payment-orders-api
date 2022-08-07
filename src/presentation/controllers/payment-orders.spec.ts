@@ -1,7 +1,7 @@
 import { PaymentOrdersController } from '@/presentation/controllers/payment-orders.controller';
 
 describe('Payment Orders Controller', () => {
-  test('Should return not found transaction', () => {
+  test('Should return transaction created', () => {
     const sut = new PaymentOrdersController();
 
     const httpRequest = {
@@ -13,7 +13,7 @@ describe('Payment Orders Controller', () => {
     };
 
     const httpResponse = sut.handle(httpRequest);
-    expect(httpResponse.statusCode).toBe(404);
-    expect(httpResponse.body).toBe(null);
+    expect(httpResponse.statusCode).toBe(201);
+    expect(httpResponse.body).toEqual({ internalId: 'any_id', status: 'any_status' });
   });
 });

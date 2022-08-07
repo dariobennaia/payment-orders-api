@@ -1,5 +1,6 @@
 export class PaymentOrdersController {
   handle(httpRequest: any): any {
-    return { statusCode: 404, body: null };
+    const body = { internalId: 'any_id', status: 'any_status' };
+    return { statusCode: 201, body };
   }
 }
