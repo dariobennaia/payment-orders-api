@@ -1,25 +1,26 @@
 import { Transfer } from '@/domain/usecases';
+import { faker } from '@faker-js/faker';
 
 export const mockRequest = () => ({
   body: {
-    externalId: '1',
-    mount: 100,
-    expectedOn: new Date(),
+    externalId: faker.datatype.uuid(),
+    mount: faker.finance.amount(),
+    expectedOn: faker.date.past(),
   },
 });
 
 export const mockResponse = (): Transfer.Result => ({
-  internalId: '2',
+  internalId: faker.datatype.uuid(),
   status: 'CREATED',
 });
 
 export class DbTransfer implements Transfer {
-  result = {
-    internalId: '1',
+  result: Transfer.Result = {
+    internalId: faker.datatype.uuid(),
     status: 'CREATED',
   };
 
-  async send(): Promise<any> {
+  async send(): Promise<Transfer.Result> {
     return this.result;
   }
 }
