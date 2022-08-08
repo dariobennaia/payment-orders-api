@@ -1,7 +1,6 @@
 import { Validation } from '@/presentation/protocols';
+import { ValidationSpy } from '@/tests/validations/mocks';
 import { ValidationComposite } from '@/validations';
-
-import { ValidationSpy } from './mocks';
 
 type SutType = {
   sut: Validation;

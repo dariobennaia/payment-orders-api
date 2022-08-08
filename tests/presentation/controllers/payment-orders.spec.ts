@@ -2,10 +2,13 @@ import { Transfer } from '@/domain/usecases';
 import { PaymentOrdersController } from '@/presentation/controllers/payment-orders.controller';
 import { internalServerError } from '@/presentation/helpers';
 import { Controller } from '@/presentation/protocols';
+import {
+  DbTransfer,
+  mockRequest,
+  mockResponse,
+} from '@/tests/presentation/mocks';
+import { ValidationSpy } from '@/tests/validations/mocks';
 import { ValidationComposite } from '@/validations';
-
-import { ValidationSpy } from '../../validations/mocks';
-import { DbTransfer, mockRequest, mockResponse } from '../mocks';
 
 type SutType = {
   sut: Controller;
