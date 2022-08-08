@@ -1,8 +1,21 @@
 import { PaymentOrdersController } from '@/presentation/controllers/payment-orders.controller';
 
+import { Controller } from '../protocols';
+
+type SutType = {
+  sut: Controller
+}
+
+const makeSut = (): SutType => {
+  const sut = new PaymentOrdersController();
+  return {
+    sut,
+  };
+};
+
 describe('Payment Orders Controller', () => {
   test('Should return transaction created', async () => {
-    const sut = new PaymentOrdersController();
+    const { sut } = makeSut();
 
     const httpRequest = {
       body: {
