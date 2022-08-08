@@ -29,4 +29,12 @@ describe('Required Validation Field', () => {
     const validate = sut.validate(now);
     expect(validate).toEqual(undefined);
   });
+
+  test('Should not return an error if date big then now', async () => {
+    const now = new Date();
+    const future = faker.date.future();
+    const { sut } = makeSut(now);
+    const validate = sut.validate(future);
+    expect(validate).toEqual(undefined);
+  });
 });
