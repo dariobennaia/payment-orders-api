@@ -14,7 +14,7 @@ const makeSut = (date = new Date()): SutType => {
   };
 };
 
-describe('Required Validation Field', () => {
+describe('Date Lessthen Validation', () => {
   test('Should return an error if date less than now', async () => {
     const now = new Date();
     const pastDate = faker.date.past();
