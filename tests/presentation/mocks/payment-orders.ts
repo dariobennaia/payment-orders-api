@@ -4,7 +4,7 @@ import { faker } from '@faker-js/faker';
 export const mockRequest = () => ({
   body: {
     externalId: faker.datatype.uuid(),
-    mount: faker.finance.amount(),
+    amount: faker.finance.amount(),
     expectedOn: faker.date.past(),
   },
 });

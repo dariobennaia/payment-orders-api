@@ -5,7 +5,7 @@ export interface Transfer {
 export namespace Transfer {
   export type Params = {
     externalId: string;
-    mount: number;
+    amount: number;
     expectedOn: Date;
   }
 
