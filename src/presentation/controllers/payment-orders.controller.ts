@@ -1,4 +1,5 @@
 import { Transfer } from '@/domain/usecases';
+import { methodNotAllowed, ok } from '@/presentation/helpers';
 import { Controller, HttpResponse } from '@/presentation/protocols';
 
 export class PaymentOrdersController implements Controller {
@@ -8,10 +9,10 @@ export class PaymentOrdersController implements Controller {
     httpRequest: PaymentOrdersController.Request,
   ): Promise<HttpResponse> {
     if (!httpRequest.externalId || !httpRequest.amount) {
-      return { statusCode: 405, body: new Error('Erro de negocio') };
+      return methodNotAllowed(new Error('id, amount or expectedOn invalids'));
     }
     const body = await this.transfer.send(httpRequest);
-    return { statusCode: 201, body };
+    return ok(body);
   }
 }
 

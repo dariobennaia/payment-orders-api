@@ -39,6 +39,6 @@ describe('Payment Orders Controller', () => {
     const httpResponse = await sut.handle({});
 
     expect(httpResponse.statusCode).toBe(405);
-    expect(httpResponse.body).toEqual(new Error('Erro de negocio'));
+    expect(httpResponse.body).toEqual(new Error('id, amount or expectedOn invalids'));
   });
 });
