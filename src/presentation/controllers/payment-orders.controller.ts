@@ -7,6 +7,9 @@ export class PaymentOrdersController implements Controller {
   async handle(
     httpRequest: PaymentOrdersController.Request,
   ): Promise<HttpResponse> {
+    if (!httpRequest.externalId || !httpRequest.amount) {
+      return { statusCode: 405, body: new Error('Erro de negocio') };
+    }
     const body = await this.transfer.send(httpRequest);
     return { statusCode: 201, body };
   }
