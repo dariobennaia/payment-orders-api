@@ -25,4 +25,10 @@ describe('Required Validation Field', () => {
     const validate = sut.validate({ any_field: '' });
     expect(validate).toEqual(new InvalidParamError('any_field'));
   });
+
+  test('Should not return an error', async () => {
+    const { sut } = makeSut();
+    const validate = sut.validate({ any_field: 'any_value' });
+    expect(validate).toBe(undefined);
+  });
 });
