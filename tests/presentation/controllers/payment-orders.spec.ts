@@ -1,5 +1,6 @@
 import { Transfer } from '@/domain/usecases';
 import { PaymentOrdersController } from '@/presentation/controllers/payment-orders.controller';
+import { internalServerError } from '@/presentation/helpers';
 import { Controller } from '@/presentation/protocols';
 import { ValidationComposite } from '@/validations';
 
@@ -49,5 +50,17 @@ describe('Payment Orders Controller', () => {
 
     expect(httpResponse.statusCode).toBe(405);
     expect(httpResponse.body).toEqual(validationsSpy[0].error);
+  });
+
+  test('Should return 500 internal server error if not transfer order', async () => {
+    const { sut, dbTransferSpy } = makeSut();
+
+    const httpRequest = mockRequest();
+    jest
+      .spyOn(dbTransferSpy, 'send')
+      .mockImplementation(async () => { throw internalServerError(new Error()); });
+
+    const httpResponse = await sut.handle(httpRequest);
+    expect(httpResponse).toEqual(internalServerError(new Error()));
   });
 });
