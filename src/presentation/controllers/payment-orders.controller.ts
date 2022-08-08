@@ -7,7 +7,7 @@ export class PaymentOrdersController implements Controller {
   async handle(
     httpRequest: PaymentOrdersController.Request,
   ): Promise<HttpResponse> {
-    const body = { internalId: 'any_id', status: 'any_status' };
+    const body = await this.transfer.send(httpRequest);
     return { statusCode: 201, body };
   }
 }
