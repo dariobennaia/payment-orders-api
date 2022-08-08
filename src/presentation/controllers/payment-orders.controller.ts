@@ -1,6 +1,9 @@
+import { Transfer } from '@/domain/usecases';
 import { Controller, HttpResponse } from '@/presentation/protocols';
 
 export class PaymentOrdersController implements Controller {
+  constructor(private readonly transfer: Transfer) {}
+
   async handle(
     httpRequest: PaymentOrdersController.Request,
   ): Promise<HttpResponse> {
@@ -10,9 +13,5 @@ export class PaymentOrdersController implements Controller {
 }
 
 export namespace PaymentOrdersController {
-  export type Request = {
-    externalId: string;
-    mount: number;
-    expectedOn: Date;
-  };
+  export type Request = Transfer.Params;
 }
