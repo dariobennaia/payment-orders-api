@@ -16,7 +16,7 @@ const makeSut = (): SutType => {
 describe('Required Validation Field', () => {
   test('Should return an error if missing param', async () => {
     const { sut } = makeSut();
-    const validate = await sut.validate({});
+    const validate = sut.validate({});
     expect(validate).toEqual(new InvalidParamError('any_field'));
   });
 });
