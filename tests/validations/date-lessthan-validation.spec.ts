@@ -22,4 +22,11 @@ describe('Required Validation Field', () => {
     const validate = sut.validate(pastDate);
     expect(validate).toEqual(new DateLessThanError(now));
   });
+
+  test('Should not return an error if date equals now', async () => {
+    const now = new Date();
+    const { sut } = makeSut(now);
+    const validate = sut.validate(now);
+    expect(validate).toEqual(undefined);
+  });
 });
