@@ -1,16 +1,7 @@
 import { Validation } from '@/presentation/protocols';
 import { ValidationComposite } from '@/validations';
 
-class ValidationSpy implements Validation {
-  public error: Error = null;
-
-  public input: string;
-
-  validate(input: any): Error {
-    this.input = input;
-    return this.error;
-  }
-}
+import { ValidationSpy } from './mocks';
 
 type SutType = {
   sut: Validation;
