@@ -1,5 +1,5 @@
 import { Transfer } from '@/domain/usecases';
-import { methodNotAllowed, ok } from '@/presentation/helpers';
+import { internalServerError, methodNotAllowed, ok } from '@/presentation/helpers';
 import { Controller, HttpResponse, Validation } from '@/presentation/protocols';
 
 export class PaymentOrdersController implements Controller {
@@ -15,8 +15,13 @@ export class PaymentOrdersController implements Controller {
     if (error) {
       return methodNotAllowed(error);
     }
-    const body = await this.transfer.send(httpRequest);
-    return ok(body);
+
+    try {
+      const body = await this.transfer.send(httpRequest);
+      return ok(body);
+    } catch (err) {
+      return internalServerError(err);
+    }
   }
 }
 
