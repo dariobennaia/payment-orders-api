@@ -33,4 +33,12 @@ describe('Payment Orders Controller', () => {
     expect(httpResponse.statusCode).toBe(201);
     expect(httpResponse.body).toEqual(response);
   });
+
+  test('Should return 405 error if send invalid params', async () => {
+    const { sut } = makeSut();
+    const httpResponse = await sut.handle({});
+
+    expect(httpResponse.statusCode).toBe(405);
+    expect(httpResponse.body).toEqual(new Error('Erro de negocio'));
+  });
 });
