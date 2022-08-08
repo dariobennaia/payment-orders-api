@@ -1,31 +1,8 @@
 import { Transfer } from '@/domain/usecases';
 import { PaymentOrdersController } from '@/presentation/controllers/payment-orders.controller';
+import { Controller } from '@/presentation/protocols';
 
-import { Controller } from '../protocols';
-
-class DbTransfer implements Transfer {
-  result = {
-    internalId: '1',
-    status: 'CREATED',
-  };
-
-  async send(): Promise<any> {
-    return this.result;
-  }
-}
-
-const mockRequest = () => ({
-  body: {
-    externalId: '1',
-    mount: 100,
-    expectedOn: new Date(),
-  },
-});
-
-const mockResponse = (): Transfer.Result => ({
-  internalId: '2',
-  status: 'CREATED',
-});
+import { DbTransfer, mockRequest, mockResponse } from '../mocks';
 
 type SutType = {
   sut: Controller;
