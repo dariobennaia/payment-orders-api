@@ -1,10 +1,14 @@
 import { Transfer } from '@/domain/usecases';
 import { faker } from '@faker-js/faker';
 
-export const mockRequest = () => ({
+type MockRequest = {
+  body: Transfer.Params;
+};
+
+export const mockRequest = (): MockRequest => ({
   body: {
     externalId: faker.datatype.uuid(),
-    amount: faker.finance.amount(),
+    amount: Number(faker.finance.amount()),
     expectedOn: faker.date.past(),
   },
 });
