@@ -1,13 +1,27 @@
+import { Transfer } from '@/domain/usecases';
 import { PaymentOrdersController } from '@/presentation/controllers/payment-orders.controller';
 
 import { Controller } from '../protocols';
+
+class DbTransfer implements Transfer {
+  result = {
+    externalId: '1',
+    mount: 100,
+    expectedOn: new Date(),
+  };
+
+  async send(): Promise<any> {
+    return this.result;
+  }
+}
 
 type SutType = {
   sut: Controller
 }
 
 const makeSut = (): SutType => {
-  const sut = new PaymentOrdersController();
+  const dbTransferSpy = new DbTransfer();
+  const sut = new PaymentOrdersController(dbTransferSpy);
   return {
     sut,
   };
