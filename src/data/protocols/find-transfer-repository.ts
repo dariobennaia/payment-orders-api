@@ -1,4 +1,4 @@
-import { TransferModel } from '@/domain/models';
+import { TransferModel, TransferModelResult } from '@/domain/models';
 
 export interface FindTransferRepository {
   findByParams: (
@@ -7,6 +7,6 @@ export interface FindTransferRepository {
 }
 
 export namespace FindTransferRepository {
-  export type Params = Partial<TransferModel>;
-  export type Result = TransferModel[];
+  export type Params = Partial<Omit<TransferModel, 'status'>>;
+  export type Result = TransferModelResult[];
 }

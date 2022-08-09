@@ -10,19 +10,19 @@ export class DbTransfer implements Transfer {
   async send(params: DbTransfer.Params): Promise<DbTransfer.Result> {
     let repo = await this.createTransferRepository.save({
       ...params,
-      status: 'CREATED',
+      status: { name: 'CREATED' },
     });
 
     if (params.expectedOn > new Date()) {
       repo = await this.createTransferRepository.save({
         ...params,
-        status: 'SCHEDULED',
+        status: { name: 'SCHEDULED' },
       });
-      return { internalId: repo.id, status: repo.status };
+      return { internalId: repo.id, status: repo.status.name };
     }
 
     await this.transferApi.send(params);
-    return { internalId: repo.id, status: repo.status };
+    return { internalId: repo.id, status: repo.status.name };
   }
 }
 
