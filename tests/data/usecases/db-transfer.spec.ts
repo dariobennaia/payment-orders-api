@@ -1,20 +1,27 @@
 import { DbTransfer } from '@/data/usecases';
 import { Transfer } from '@/domain/usecases/transfer';
-import { TransferApiMock } from '@/tests/data/mocks';
+import {
+  resultTransferRepository,
+  TransferApiMock,
+  TransferMongoRepositoryMock,
+} from '@/tests/data/mocks';
 import { mockRequest } from '@/tests/presentation/mocks';
 import { faker } from '@faker-js/faker';
 
 type SutType = {
   sut: Transfer;
   transferApiMock: TransferApiMock;
+  transferMongoRepositoryMock: TransferMongoRepositoryMock;
 };
 
 const makeSut = (): SutType => {
   const transferApiMock = new TransferApiMock();
-  const sut = new DbTransfer(transferApiMock);
+  const transferMongoRepositoryMock = new TransferMongoRepositoryMock();
+  const sut = new DbTransfer(transferApiMock, transferMongoRepositoryMock);
   return {
     sut,
     transferApiMock,
+    transferMongoRepositoryMock,
   };
 };
 
@@ -23,15 +30,15 @@ describe('Db Transfer', () => {
     const { sut } = makeSut();
     const { body } = mockRequest();
     const created = await sut.send(body);
-    expect(created).toEqual({ internalId: '', status: 'CREATED' });
+    expect(created.status).toEqual('CREATED');
   });
 
-  test('Should schedule transfer with bank api', async () => {
-    const { sut, transferApiMock } = makeSut();
+  test('Should schedule transfer', async () => {
+    const { sut, transferMongoRepositoryMock } = makeSut();
 
     jest
-      .spyOn(transferApiMock, 'send')
-      .mockImplementationOnce(async () => null);
+      .spyOn(transferMongoRepositoryMock, 'save')
+      .mockImplementationOnce(async () => resultTransferRepository({ status: 'SCHEDULED' }));
 
     const { body } = mockRequest();
     const created = await sut.send({
@@ -39,6 +46,6 @@ describe('Db Transfer', () => {
       expectedOn: faker.date.future(),
     });
 
-    expect(created).toEqual({ internalId: '', status: 'SCHEDULED' });
+    expect(created.status).toEqual('SCHEDULED');
   });
 });
