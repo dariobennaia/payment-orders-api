@@ -1,13 +1,26 @@
-import { TransferApi, CreateTransferRepository } from '@/data/protocols';
+import {
+  TransferApi,
+  CreateTransferRepository,
+  FindTransferRepository,
+} from '@/data/protocols';
 import { Transfer } from '@/domain/usecases/transfer';
 
 export class DbTransfer implements Transfer {
   constructor(
     private readonly transferApi: TransferApi,
     private readonly createTransferRepository: CreateTransferRepository,
+    private readonly findTransferRepository: FindTransferRepository,
   ) {}
 
   async send(params: DbTransfer.Params): Promise<DbTransfer.Result> {
+    const find = await this.findTransferRepository.findByParams({
+      externalId: params.externalId,
+    });
+    if (find.length > 0) {
+      const [{ id, status }] = find;
+      return { internalId: id, status: status[0].name };
+    }
+
     let repo = await this.createTransferRepository.save({
       ...params,
       status: { name: 'CREATED' },
