@@ -1,20 +1,20 @@
 import { DbTransfer } from '@/data/usecases';
 import { Transfer } from '@/domain/usecases/transfer';
-import { BankApiService } from '@/infra/bank';
+import { TransferApiMock } from '@/tests/data/mocks';
 import { mockRequest } from '@/tests/presentation/mocks';
 import { faker } from '@faker-js/faker';
 
 type SutType = {
   sut: Transfer;
-  bankApiServiceMockSpy: BankApiService;
+  transferApiMock: TransferApiMock;
 };
 
 const makeSut = (): SutType => {
-  const bankApiServiceMockSpy = new BankApiService();
-  const sut = new DbTransfer(bankApiServiceMockSpy);
+  const transferApiMock = new TransferApiMock();
+  const sut = new DbTransfer(transferApiMock);
   return {
     sut,
-    bankApiServiceMockSpy,
+    transferApiMock,
   };
 };
 
@@ -27,14 +27,17 @@ describe('Db Transfer', () => {
   });
 
   test('Should schedule transfer with bank api', async () => {
-    const { sut, bankApiServiceMockSpy } = makeSut();
+    const { sut, transferApiMock } = makeSut();
 
     jest
-      .spyOn(bankApiServiceMockSpy, 'send')
+      .spyOn(transferApiMock, 'send')
       .mockImplementationOnce(async () => null);
 
     const { body } = mockRequest();
-    const created = await sut.send({ ...body, expectedOn: faker.date.future() });
+    const created = await sut.send({
+      ...body,
+      expectedOn: faker.date.future(),
+    });
 
     expect(created).toEqual({ internalId: '', status: 'SCHEDULED' });
   });
