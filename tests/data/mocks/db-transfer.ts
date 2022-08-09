@@ -1,13 +1,13 @@
-import { TransferApi, CreateTransferRepository } from '@/data/protocols';
+import { TransferApi, CreateTransferRepository, FindTransferRepository } from '@/data/protocols';
 import { TransferModel } from '@/domain/models';
 import { Transfer } from '@/domain/usecases';
 import { faker } from '@faker-js/faker';
 
-export const resultTransferRepository = (
+export const resultCreateTransferRepository = (
   params: Partial<TransferModel>,
 ): TransferModel => ({
   id: faker.database.mongodbObjectId(),
-  status: 'CREATED',
+  status: { name: 'CREATED' },
   amount: Number(faker.commerce.price()),
   expectedOn: new Date(),
   externalId: faker.datatype.uuid(),
