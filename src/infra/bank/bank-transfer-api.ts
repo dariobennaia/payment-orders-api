@@ -1,11 +1,11 @@
-import { BankApi } from '@/data/protocols';
+import { TransferApi } from '@/data/protocols';
 
-export class BankApiService implements BankApi {
-  async send(params: BankApi.Params): Promise<any> {
+export class BankApiService implements TransferApi {
+  async send(params: TransferApi.Params): Promise<any> {
     return {};
   }
 }
 
 export namespace BankApiService {
-  export type Params = BankApi.Params;
+  export type Params = TransferApi.Params;
 }
