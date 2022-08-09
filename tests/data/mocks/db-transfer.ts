@@ -1,4 +1,4 @@
-import { TransferApi, TransferRepository } from '@/data/protocols';
+import { TransferApi, CreateTransferRepository } from '@/data/protocols';
 import { TransferModel } from '@/domain/models';
 import { Transfer } from '@/domain/usecases';
 import { faker } from '@faker-js/faker';
@@ -22,12 +22,12 @@ export class TransferApiMock implements TransferApi {
     return {};
   }
 }
-export class TransferMongoRepositoryMock implements TransferRepository {
-  params: TransferRepository.Params;
+export class TransferMongoRepositoryMock implements CreateTransferRepository {
+  params: CreateTransferRepository.Params;
 
   result: TransferModel;
 
-  async save(params: TransferRepository.Params): Promise<TransferModel> {
+  async save(params: CreateTransferRepository.Params): Promise<TransferModel> {
     this.params = params;
     return {
       id: faker.database.mongodbObjectId(),
