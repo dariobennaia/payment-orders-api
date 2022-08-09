@@ -31,6 +31,7 @@ describe('Db Transfer', () => {
     const { body } = mockRequest();
     const created = await sut.send(body);
     expect(created.status).toEqual('CREATED');
+    expect(created.internalId).toBeDefined();
   });
 
   test('Should schedule transfer', async () => {
@@ -47,5 +48,6 @@ describe('Db Transfer', () => {
     });
 
     expect(created.status).toEqual('SCHEDULED');
+    expect(created.internalId).toBeDefined();
   });
 });
