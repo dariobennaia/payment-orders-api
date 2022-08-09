@@ -1,20 +1,20 @@
-import { TransferApi, TransferRepository } from '@/data/protocols';
+import { TransferApi, CreateTransferRepository } from '@/data/protocols';
 import { Transfer } from '@/domain/usecases/transfer';
 
 export class DbTransfer implements Transfer {
   constructor(
     private readonly transferApi: TransferApi,
-    private readonly transferRepository: TransferRepository,
+    private readonly createTransferRepository: CreateTransferRepository,
   ) {}
 
   async send(params: DbTransfer.Params): Promise<DbTransfer.Result> {
-    let repo = await this.transferRepository.save({
+    let repo = await this.createTransferRepository.save({
       ...params,
       status: 'CREATED',
     });
 
     if (params.expectedOn > new Date()) {
-      repo = await this.transferRepository.save({
+      repo = await this.createTransferRepository.save({
         ...params,
         status: 'SCHEDULED',
       });
