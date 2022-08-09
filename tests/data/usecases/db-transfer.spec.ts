@@ -1,7 +1,7 @@
 import { DbTransfer } from '@/data/usecases';
 import { Transfer } from '@/domain/usecases/transfer';
 import {
-  resultTransferRepository,
+  resultCreateTransferRepository,
   TransferApiMock,
   TransferMongoRepositoryMock,
 } from '@/tests/data/mocks';
@@ -39,7 +39,7 @@ describe('Db Transfer', () => {
 
     jest
       .spyOn(transferMongoRepositoryMock, 'save')
-      .mockImplementationOnce(async () => resultTransferRepository({ status: 'SCHEDULED' }));
+      .mockImplementationOnce(async () => resultCreateTransferRepository({ status: { name: 'SCHEDULED' } }));
 
     const { body } = mockRequest();
     const created = await sut.send({
