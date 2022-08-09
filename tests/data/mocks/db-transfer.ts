@@ -1,5 +1,5 @@
 import { TransferApi, CreateTransferRepository, FindTransferRepository } from '@/data/protocols';
-import { TransferModel } from '@/domain/models';
+import { TransferModel, TransferModelResult } from '@/domain/models';
 import { Transfer } from '@/domain/usecases';
 import { faker } from '@faker-js/faker';
 
@@ -12,6 +12,14 @@ export const resultCreateTransferRepository = (
   expectedOn: new Date(),
   externalId: faker.datatype.uuid(),
   ...params,
+});
+
+export const resultFindTransferRepository = (): TransferModelResult => ({
+  id: faker.database.mongodbObjectId(),
+  status: [{ name: 'CREATED', date: new Date() }],
+  amount: Number(faker.commerce.price()),
+  expectedOn: new Date(),
+  externalId: faker.datatype.uuid(),
 });
 
 export class TransferApiMock implements TransferApi {
@@ -34,5 +42,21 @@ export class TransferMongoRepositoryMock implements CreateTransferRepository {
       status: 'CREATED',
       ...params,
     };
+  }
+}
+
+export class FindTransferMongoRepositoryMock implements FindTransferRepository {
+  params: FindTransferRepository.Params;
+
+  async findByParams(
+    params: FindTransferRepository.Params,
+  ): Promise<FindTransferRepository.Result> {
+    this.params = params;
+    return [
+      {
+        ...resultFindTransferRepository(),
+        ...params,
+      },
+    ];
   }
 }
