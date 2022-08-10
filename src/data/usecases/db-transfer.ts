@@ -43,8 +43,7 @@ export class DbTransfer implements Transfer {
     }
 
     const result = await this.createTransfer(params);
-
-    if (params.expectedOn > new Date()) {
+    if (new Date(params.expectedOn) > new Date()) {
       return this.scheduleTransfer(result.internalId);
     }
 
