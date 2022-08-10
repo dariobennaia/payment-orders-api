@@ -63,5 +63,15 @@ describe('Transfer Repository Mongo', () => {
       expect(finded).toBeDefined();
       expect(finded[0].id).toBe(created.id);
     });
+
+    test('Should returns an empty array if not found transfers', async () => {
+      const { sut } = makeSut();
+      const finded = await sut.findByParams({
+        id: faker.database.mongodbObjectId(),
+      });
+
+      expect(finded).toBeDefined();
+      expect(finded).toEqual([]);
+    });
   });
 });
