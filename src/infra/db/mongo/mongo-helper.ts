@@ -21,4 +21,8 @@ export const MongoHelper = {
   sanitize<T>({ _id, insertedId, ...rest }: any): T {
     return { id: _id ? String(_id) : String(insertedId), ...rest };
   },
+
+  sanitizeMap(data: any): any {
+    return data.map(({ _id, ...rest }) => ({ id: String(_id), ...rest }));
+  },
 };
