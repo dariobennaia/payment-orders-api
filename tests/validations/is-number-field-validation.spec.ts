@@ -1,4 +1,4 @@
-import { InvalidParamError } from '@/presentation/errors';
+import { InvalidTypeParamError } from '@/presentation/errors';
 import { Validation } from '@/presentation/protocols';
 import { IsNumberFieldValidation } from '@/validations';
 
@@ -25,12 +25,12 @@ describe('Is Number Validation', () => {
   test('Should return an error if missing param', async () => {
     const { sut } = makeSut();
     const validate = sut.validate({});
-    expect(validate).toEqual(new InvalidParamError('anyField'));
+    expect(validate).toEqual(new InvalidTypeParamError('anyField'));
   });
 
   test('Should return an error if empty field', async () => {
     const { sut } = makeSut();
     const validate = sut.validate({ anyField: '' });
-    expect(validate).toEqual(new InvalidParamError('anyField'));
+    expect(validate).toEqual(new InvalidTypeParamError('anyField'));
   });
 });

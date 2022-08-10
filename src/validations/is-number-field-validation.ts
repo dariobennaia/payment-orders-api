@@ -1,4 +1,4 @@
-import { InvalidParamError } from '@/presentation/errors';
+import { InvalidTypeParamError } from '@/presentation/errors';
 import { Validation } from '@/presentation/protocols';
 
 export class IsNumberFieldValidation implements Validation {
@@ -6,6 +6,6 @@ export class IsNumberFieldValidation implements Validation {
 
   validate(input: any): Error {
     if (typeof input[this.fieldName] === 'number') return;
-    return new InvalidParamError(this.fieldName);
+    return new InvalidTypeParamError(this.fieldName);
   }
 }
