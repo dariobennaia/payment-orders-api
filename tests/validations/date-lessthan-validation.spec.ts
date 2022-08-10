@@ -37,4 +37,12 @@ describe('Date Lessthen Validation', () => {
     const validate = sut.validate(future);
     expect(validate).toEqual(undefined);
   });
+
+  test('Should return an error if date string less than now', async () => {
+    const now = new Date();
+    const pastDate = '2020-12-12';
+    const { sut } = makeSut(now);
+    const validate = sut.validate(pastDate);
+    expect(validate).toEqual(new DateLessThanError(now));
+  });
 });
