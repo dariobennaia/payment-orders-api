@@ -1,0 +1,11 @@
+import { InvalidTypeParamError } from '@/presentation/errors';
+import { Validation } from '@/presentation/protocols';
+
+export class IsStringFieldValidation implements Validation {
+  constructor(private readonly fieldName: string) {}
+
+  validate(input: any): Error {
+    if (typeof input[this.fieldName] === 'string') return;
+    return new InvalidTypeParamError(this.fieldName);
+  }
+}
