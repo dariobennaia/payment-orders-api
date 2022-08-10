@@ -1,5 +1,6 @@
 import { MongoHelper, TransferRepositoryMongo } from '@/infra/db';
 import { dataCreateTransferMock } from '@/tests/infra/mocks';
+import { faker } from '@faker-js/faker';
 
 type SutType = {
   sut: TransferRepositoryMongo;
@@ -49,6 +50,18 @@ describe('Transfer Repository Mongo', () => {
       expect(updated).toBeDefined();
       expect(created.status.name).toEqual('CREATED');
       expect(updated.status.name).toEqual('SCHEDULED');
+    });
+  });
+
+  describe('findByParams()', () => {
+    test('Should returns a transfer', async () => {
+      const { sut } = makeSut();
+      const created = await sut.save(dataCreateTransferMock());
+      const finded = await sut.findByParams({ id: created.id });
+
+      expect(created).toBeDefined();
+      expect(finded).toBeDefined();
+      expect(finded[0].id).toBe(created.id);
     });
   });
 });
