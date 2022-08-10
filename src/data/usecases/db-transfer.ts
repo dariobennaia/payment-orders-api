@@ -14,6 +14,25 @@ export class DbTransfer implements Transfer {
     private readonly updateTransferRepository: UpdateTransferRepository,
   ) {}
 
+  private async createTransfer(
+    params: DbTransfer.Params,
+  ): Promise<DbTransfer.Result> {
+    const { id: internalId, status } = await this.createTransferRepository.save(
+      {
+        ...params,
+        status: { name: 'CREATED' },
+      },
+    );
+    return { internalId, status: status.name };
+  }
+
+  private async scheduleTransfer(id: string): Promise<DbTransfer.Result> {
+    const { id: internalId, status } = await this.updateTransferRepository.updateById(id, {
+      status: { name: 'SCHEDULED' },
+    });
+    return { internalId, status: status.name };
+  }
+
   async send(params: DbTransfer.Params): Promise<DbTransfer.Result> {
     const find = await this.findTransferRepository.findByParams({
       externalId: params.externalId,
@@ -23,20 +42,14 @@ export class DbTransfer implements Transfer {
       return { internalId: id, status: status[0].name };
     }
 
-    let repo = await this.createTransferRepository.save({
-      ...params,
-      status: { name: 'CREATED' },
-    });
+    const result = await this.createTransfer(params);
 
     if (params.expectedOn > new Date()) {
-      repo = await this.updateTransferRepository.updateById(repo.id, {
-        status: { name: 'SCHEDULED' },
-      });
-      return { internalId: repo.id, status: repo.status.name };
+      return this.scheduleTransfer(result.internalId);
     }
 
     await this.transferApi.send(params);
-    return { internalId: repo.id, status: repo.status.name };
+    return result;
   }
 }
 
