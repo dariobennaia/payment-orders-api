@@ -15,12 +15,16 @@ describe('Transfer Repository Mongo', () => {
   });
 
   afterAll(async () => {
-    await MongoHelper.getCollection('transfer').drop().catch(() => null);
+    await MongoHelper.getCollection('transfer')
+      .drop()
+      .catch(() => null);
     await MongoHelper.disconnect();
   });
 
   beforeEach(async () => {
-    await MongoHelper.getCollection('transfer').drop().catch(() => null);
+    await MongoHelper.getCollection('transfer')
+      .drop()
+      .catch(() => null);
   });
 
   describe('save()', () => {
@@ -30,6 +34,21 @@ describe('Transfer Repository Mongo', () => {
       const { id, ...rest } = await sut.save(addAccountParams);
       expect(rest).toEqual(addAccountParams);
       expect(id).toBeDefined();
+    });
+  });
+
+  describe('update()', () => {
+    test('Should schedule a transfer', async () => {
+      const { sut } = makeSut();
+      const created = await sut.save(dataCreateTransferMock());
+      const updated = await sut.updateById(created.id, {
+        status: { name: 'SCHEDULED' },
+      });
+
+      expect(created).toBeDefined();
+      expect(updated).toBeDefined();
+      expect(created.status.name).toEqual('CREATED');
+      expect(updated.status.name).toEqual('SCHEDULED');
     });
   });
 });
