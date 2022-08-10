@@ -48,7 +48,7 @@ describe('Payment Orders Controller', () => {
 
   test('Should return 405 error if send invalid params', async () => {
     const { sut, validationsSpy } = makeSut();
-    validationsSpy[0].error = new Error();
+    validationsSpy[0].error = { name: 'Error', message: '' };
     const httpResponse = await sut.handle({});
 
     expect(httpResponse.statusCode).toBe(405);

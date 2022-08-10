@@ -6,9 +6,9 @@ export const internalServerError = (error: Error): HttpResponse => ({
   body: new InternalServerError(error.stack),
 });
 
-export const methodNotAllowed = (error: Error): HttpResponse => ({
+export const methodNotAllowed = ({ name, message }: Error): HttpResponse => ({
   statusCode: 405,
-  body: error,
+  body: { name, message },
 });
 
 export const ok = (data: any): HttpResponse => ({
