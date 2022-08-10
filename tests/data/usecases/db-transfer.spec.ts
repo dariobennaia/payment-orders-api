@@ -78,6 +78,36 @@ describe('Db Transfer', () => {
     expect(created.internalId).toBeDefined();
   });
 
+  test('Should schedule transfer if string date', async () => {
+    const {
+      sut,
+      transferMongoRepositoryMock,
+      findTransferRepositoryMock,
+      updateTransferMongoRepositoryMock,
+    } = makeSut();
+
+    jest
+      .spyOn(findTransferRepositoryMock, 'findByParams')
+      .mockImplementationOnce(async () => []);
+
+    jest
+      .spyOn(transferMongoRepositoryMock, 'save')
+      .mockImplementationOnce(async () => resultCreateTransferRepository({}));
+
+    jest
+      .spyOn(updateTransferMongoRepositoryMock, 'updateById')
+      .mockImplementationOnce(async () => resultCreateTransferRepository({ status: { name: 'SCHEDULED' } }));
+
+    const { body } = mockRequest();
+    const created = await sut.send({
+      ...body,
+      expectedOn: '2090-09-12',
+    } as any);
+
+    expect(created.status).toEqual('SCHEDULED');
+    expect(created.internalId).toBeDefined();
+  });
+
   test('Should return last status if already transfer', async () => {
     const { sut, findTransferRepositoryMock } = makeSut();
 
