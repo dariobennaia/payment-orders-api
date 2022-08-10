@@ -21,4 +21,11 @@ describe('Date Lessthen Validation', () => {
     const validate = sut.validate({ anyField });
     expect(validate).toEqual(new DateLessThanError('anyField'));
   });
+
+  test('Should not return an error if date big then now', async () => {
+    const { sut } = makeSut();
+    const anyField = faker.date.future();
+    const validate = sut.validate({ anyField });
+    expect(validate).toEqual(undefined);
+  });
 });
