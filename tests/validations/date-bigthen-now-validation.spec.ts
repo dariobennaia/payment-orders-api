@@ -28,4 +28,11 @@ describe('Date Lessthen Validation', () => {
     const validate = sut.validate({ anyField });
     expect(validate).toEqual(undefined);
   });
+
+  test('Should return an error if date string less than now', async () => {
+    const { sut } = makeSut();
+    const anyField = '1910-10-10';
+    const validate = sut.validate({ anyField });
+    expect(validate).toEqual(new DateLessThanError('anyField'));
+  });
 });
