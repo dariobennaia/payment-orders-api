@@ -5,7 +5,7 @@ export class DateFieldLessThan implements Validation {
   constructor(private readonly dateField: Date) {}
 
   validate(input: Date): Error {
-    if (input >= this.dateField) return;
+    if (new Date(input).getTime() >= new Date(this.dateField).getTime()) return;
     return new DateLessThanError(this.dateField);
   }
 }
