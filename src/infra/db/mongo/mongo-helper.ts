@@ -17,4 +17,8 @@ export const MongoHelper = {
   getCollection(name: string): Collection {
     return this.client.db().collection(name);
   },
+
+  sanitize<T>({ _id, insertedId, ...rest }: any): T {
+    return { id: _id ? String(_id) : String(insertedId), ...rest };
+  },
 };
