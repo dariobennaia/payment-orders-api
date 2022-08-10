@@ -2,6 +2,7 @@ import {
   TransferApi,
   CreateTransferRepository,
   FindTransferRepository,
+  UpdateTransferRepository,
 } from '@/data/protocols';
 import { Transfer } from '@/domain/usecases/transfer';
 
@@ -10,6 +11,7 @@ export class DbTransfer implements Transfer {
     private readonly transferApi: TransferApi,
     private readonly createTransferRepository: CreateTransferRepository,
     private readonly findTransferRepository: FindTransferRepository,
+    private readonly updateTransferRepository: UpdateTransferRepository,
   ) {}
 
   async send(params: DbTransfer.Params): Promise<DbTransfer.Result> {
@@ -27,8 +29,7 @@ export class DbTransfer implements Transfer {
     });
 
     if (params.expectedOn > new Date()) {
-      repo = await this.createTransferRepository.save({
-        ...params,
+      repo = await this.updateTransferRepository.updateById(repo.id, {
         status: { name: 'SCHEDULED' },
       });
       return { internalId: repo.id, status: repo.status.name };

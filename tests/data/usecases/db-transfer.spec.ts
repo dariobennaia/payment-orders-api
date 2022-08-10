@@ -6,6 +6,7 @@ import {
   TransferMongoRepositoryMock,
   FindTransferMongoRepositoryMock,
   resultFindTransferRepository,
+  UpdateTransferMongoRepositoryMock,
 } from '@/tests/data/mocks';
 import { mockRequest } from '@/tests/presentation/mocks';
 import { faker } from '@faker-js/faker';
@@ -15,22 +16,26 @@ type SutType = {
   transferApiMock: TransferApiMock;
   transferMongoRepositoryMock: TransferMongoRepositoryMock;
   findTransferRepositoryMock: FindTransferMongoRepositoryMock;
+  updateTransferMongoRepositoryMock: UpdateTransferMongoRepositoryMock;
 };
 
 const makeSut = (): SutType => {
   const transferApiMock = new TransferApiMock();
   const transferMongoRepositoryMock = new TransferMongoRepositoryMock();
+  const updateTransferMongoRepositoryMock = new UpdateTransferMongoRepositoryMock();
   const findTransferRepositoryMock = new FindTransferMongoRepositoryMock();
   const sut = new DbTransfer(
     transferApiMock,
     transferMongoRepositoryMock,
     findTransferRepositoryMock,
+    updateTransferMongoRepositoryMock,
   );
   return {
     sut,
     transferApiMock,
     transferMongoRepositoryMock,
     findTransferRepositoryMock,
+    updateTransferMongoRepositoryMock,
   };
 };
 
@@ -44,7 +49,12 @@ describe('Db Transfer', () => {
   });
 
   test('Should schedule transfer', async () => {
-    const { sut, transferMongoRepositoryMock, findTransferRepositoryMock } = makeSut();
+    const {
+      sut,
+      transferMongoRepositoryMock,
+      findTransferRepositoryMock,
+      updateTransferMongoRepositoryMock,
+    } = makeSut();
 
     jest
       .spyOn(findTransferRepositoryMock, 'findByParams')
@@ -52,6 +62,10 @@ describe('Db Transfer', () => {
 
     jest
       .spyOn(transferMongoRepositoryMock, 'save')
+      .mockImplementationOnce(async () => resultCreateTransferRepository({}));
+
+    jest
+      .spyOn(updateTransferMongoRepositoryMock, 'updateById')
       .mockImplementationOnce(async () => resultCreateTransferRepository({ status: { name: 'SCHEDULED' } }));
 
     const { body } = mockRequest();

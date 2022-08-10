@@ -1,4 +1,9 @@
-import { TransferApi, CreateTransferRepository, FindTransferRepository } from '@/data/protocols';
+import {
+  TransferApi,
+  CreateTransferRepository,
+  FindTransferRepository,
+  UpdateTransferRepository,
+} from '@/data/protocols';
 import { TransferModel, TransferModelResult } from '@/domain/models';
 import { Transfer } from '@/domain/usecases';
 import { faker } from '@faker-js/faker';
@@ -30,6 +35,7 @@ export class TransferApiMock implements TransferApi {
     return {};
   }
 }
+
 export class TransferMongoRepositoryMock implements CreateTransferRepository {
   params: CreateTransferRepository.Params;
 
@@ -42,6 +48,18 @@ export class TransferMongoRepositoryMock implements CreateTransferRepository {
       status: 'CREATED',
       ...params,
     };
+  }
+}
+
+export class UpdateTransferMongoRepositoryMock
+implements UpdateTransferRepository {
+  params: CreateTransferRepository.Params;
+
+  async updateById(
+    id: string,
+    params: UpdateTransferRepository.Params,
+  ): Promise<TransferModel> {
+    return resultCreateTransferRepository(params);
   }
 }
 
