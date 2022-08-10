@@ -26,4 +26,10 @@ describe('Is Number Validation', () => {
     const validate = sut.validate({});
     expect(validate).toEqual(new InvalidParamError('anyField'));
   });
+
+  test('Should return an error if empty field', async () => {
+    const { sut } = makeSut();
+    const validate = sut.validate({ anyField: '' });
+    expect(validate).toEqual(new InvalidParamError('anyField'));
+  });
 });
