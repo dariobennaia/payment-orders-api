@@ -1,4 +1,5 @@
 import { MongoHelper, TransferRepositoryMongo } from '@/infra/db';
+import env from '@/main/config/env';
 import { dataCreateTransferMock } from '@/tests/infra/mocks';
 import { faker } from '@faker-js/faker';
 
@@ -12,7 +13,7 @@ const makeSut = (): SutType => ({
 
 describe('Transfer Repository Mongo', () => {
   beforeAll(async () => {
-    await MongoHelper.connect('mongodb://localhost:27017');
+    await MongoHelper.connect(env.mongoUrl);
   });
 
   afterAll(async () => {

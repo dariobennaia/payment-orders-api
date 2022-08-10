@@ -1,3 +1,4 @@
 import { main } from '@/main/config/app';
+import env from '@/main/config/env';
 
-main().listen(3001);
+main().listen(env.port);
