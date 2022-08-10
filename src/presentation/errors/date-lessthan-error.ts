@@ -1,6 +1,6 @@
 export class DateLessThanError extends Error {
-  constructor(paramName: Date) {
-    super(`Date can't less than: ${paramName}`);
+  constructor(paramName: string) {
+    super(`Date can't less than now: ${paramName}`);
     this.name = 'DateLessThanError';
   }
 }
