@@ -7,7 +7,7 @@
     "prepare": "husky install",
     "build": "babel src --extensions \".ts\" --out-dir dist  --copy-files --no-copy-ignored --no-comments",
     "start": "node dist/server.js",
-    "dev": "ts-node-dev -r tsconfig-paths/register --respawn --transpile-only --ignore-watch node_modules src/server.ts",
+    "dev": "ts-node-dev -r tsconfig-paths/register --respawn --transpile-only --ignore-watch node_modules src/main/server.ts",
     "lint": "eslint src/**/*.ts --fix",
     "test": "jest",
     "test:cov": "jest --coverage"
