@@ -44,11 +44,7 @@ implements
     const transferCollection = MongoHelper.getCollection('transfer');
     let filter = params as any;
     if (id) filter = { ...params, _id: new ObjectId(id) };
-
     const finded = await transferCollection.find(filter).toArray();
-    return finded.map(({ _id, ...rest }) => ({
-      id: String(_id),
-      ...rest,
-    })) as any;
+    return MongoHelper.sanitizeMap(finded);
   }
 }
