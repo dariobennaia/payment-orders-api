@@ -17,8 +17,9 @@ describe('Is Number Validation', () => {
   test('Ensure it should return a number type', async () => {
     const { sut } = makeSut();
     const anyField = 10;
-    sut.validate({ anyField });
+    const validate = sut.validate({ anyField });
     expect(typeof anyField).toBe('number');
+    expect(validate).toBe(undefined);
   });
 
   test('Should return an error if missing param', async () => {
