@@ -2,6 +2,7 @@
 /* eslint-disable prefer-destructuring */
 import {
   CreateTransferRepository,
+  FindTransferRepository,
   UpdateTransferRepository,
 } from '@/data/protocols';
 import { TransferModel } from '@/domain/models';
@@ -9,7 +10,10 @@ import { MongoHelper } from '@/infra/db/mongo';
 import { ObjectId } from 'mongodb';
 
 export class TransferRepositoryMongo
-implements CreateTransferRepository, UpdateTransferRepository {
+implements
+    CreateTransferRepository,
+    UpdateTransferRepository,
+    FindTransferRepository {
   async save(params: CreateTransferRepository.Params): Promise<TransferModel> {
     const transferCollection = MongoHelper.getCollection('transfer');
     const data = {
@@ -28,8 +32,28 @@ implements CreateTransferRepository, UpdateTransferRepository {
     const transferCollection = MongoHelper.getCollection('transfer');
     params.status.date = new Date();
     await transferCollection.updateOne({ _id }, { $push: params });
-    const { _id: idFinded, ...rest } = await transferCollection.findOne({ _id });
+    const { _id: idFinded, ...rest } = await transferCollection.findOne({
+      _id,
+    });
     rest.status = rest.status.reverse()[0];
-    return Object.assign(<UpdateTransferRepository.Result>{}, { id: idFinded, ...rest });
+    return Object.assign(<UpdateTransferRepository.Result>{}, {
+      id: idFinded,
+      ...rest,
+    });
+  }
+
+  async findByParams({
+    id,
+    ...params
+  }: FindTransferRepository.Params): Promise<FindTransferRepository.Result> {
+    const transferCollection = MongoHelper.getCollection('transfer');
+    let filter = params as any;
+    if (id) filter = { ...params, _id: new ObjectId(id) };
+
+    const finded = await transferCollection.find(filter).toArray();
+    return finded.map(({ _id, ...rest }) => ({
+      id: String(_id),
+      ...rest,
+    })) as any;
   }
 }
