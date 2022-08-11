@@ -1,1 +1,1 @@
-export * from './transfer-repository';
+export * from './payment-order-repository';

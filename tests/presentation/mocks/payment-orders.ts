@@ -1,8 +1,8 @@
-import { FindTransfer, Transfer } from '@/domain/usecases';
+import { FindPaymentOrder, CreatePaymentOrder } from '@/domain/usecases';
 import { faker } from '@faker-js/faker';
 
 type MockRequest = {
-  body: Transfer.Params;
+  body: CreatePaymentOrder.Params;
 };
 
 export const mockRequest = (): MockRequest => ({
@@ -13,24 +13,24 @@ export const mockRequest = (): MockRequest => ({
   },
 });
 
-export const mockResponse = (): Transfer.Result => ({
+export const mockResponse = (): CreatePaymentOrder.Result => ({
   internalId: faker.datatype.uuid(),
   status: 'CREATED',
 });
 
-export class DbTransfer implements Transfer {
-  result: Transfer.Result = {
+export class DbCreatePaymentOrderMock implements CreatePaymentOrder {
+  result: CreatePaymentOrder.Result = {
     internalId: faker.datatype.uuid(),
     status: 'CREATED',
   };
 
-  async send(): Promise<Transfer.Result> {
+  async send(): Promise<CreatePaymentOrder.Result> {
     return this.result;
   }
 }
 
-export class DbFindTransferMock implements FindTransfer {
-  result: FindTransfer.Result = {
+export class DbFindPaymentOrderMock implements FindPaymentOrder {
+  result: FindPaymentOrder.Result = {
     externalId: faker.datatype.uuid(),
     internalId: faker.datatype.uuid(),
     amount: Number(faker.finance.amount()),
@@ -38,7 +38,7 @@ export class DbFindTransferMock implements FindTransfer {
     status: 'CREATED',
   };
 
-  async findById(id: string): Promise<FindTransfer.Result> {
+  async findById(id: string): Promise<FindPaymentOrder.Result> {
     return this.result;
   }
 }
