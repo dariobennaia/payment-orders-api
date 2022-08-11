@@ -1,3 +1,3 @@
 export interface ProcessPaymentOrder {
-  run: () => Promise<void>
+  run: () => void
 }
