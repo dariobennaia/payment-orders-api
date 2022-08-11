@@ -30,4 +30,15 @@ describe('Db Find Transfer', () => {
     const finded = await sut.findById(internalId);
     expect(finded).toEqual({ internalId, status: status[0].name, ...rest });
   });
+
+  test('Should return null if not found tranfer', async () => {
+    const { sut, findTransferRepositoryMock } = makeSut();
+
+    jest
+      .spyOn(findTransferRepositoryMock, 'findByParams')
+      .mockImplementationOnce(async () => []);
+
+    const finded = await sut.findById('');
+    expect(finded).toBe(null);
+  });
 });
