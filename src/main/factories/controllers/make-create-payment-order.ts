@@ -1,7 +1,7 @@
 import { DbTransfer } from '@/data/usecases';
 import { BankApiService } from '@/infra/bank';
 import { TransferRepositoryMongo } from '@/infra/db';
-import { PaymentOrdersController } from '@/presentation/controllers';
+import { CreatePaymentOrdersController } from '@/presentation/controllers';
 import {
   DateFieldBigThenNow,
   IsDecimalFieldValidation,
@@ -36,11 +36,11 @@ const makePaymentOrder = () => {
   );
 };
 
-export const makePaymentOrdersController = async (
+export const makeCreatePaymentOrdersController = async (
   req: Request,
   res: Response,
 ): Promise<any> => {
-  const controller = new PaymentOrdersController(
+  const controller = new CreatePaymentOrdersController(
     makePaymentOrder(),
     makeValidationFields(),
   );
