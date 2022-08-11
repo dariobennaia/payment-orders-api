@@ -1,0 +1,206 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "API - Tranferencias de pagamento",
+    "description": "Esta é a documentação de uma API  para um processo seletivo, usando Typescript, TDD, Clean Architecture e SOLID.",
+    "version": "0.0.1",
+    "contact": {
+      "name": "Dário Santos",
+      "email": "dariobennaia@gmail.com",
+      "url": "https://www.linkedin.com/in/dario-bennaia"
+    }
+  },
+  "paths": {
+    "/paymentOrders": {
+      "post": {
+        "tags": ["Payment Order"],
+        "summary": "API para criar uma nova transferencia ou agendar",
+        "description": "Essa rota permite que o usuario crie ou agende uma transferencia",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/schemas/paymentOrder"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Sucesso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/schemas/createPaymentOrderSuccess"
+                }
+              }
+            }
+          },
+          "405": {
+            "$ref": "#/components/invalidParams"
+          },
+          "500": {
+            "$ref": "#/components/serverError"
+          }
+        }
+      }
+    },
+    "/paymentOrders/{internalId}": {
+      "get": {
+        "tags": ["Payment Order"],
+        "summary": "API para consultar o status de uma transferencia",
+        "description": "Essa rota permite que o usuario consulte o status da transferencia pelo id interno",
+        "parameters": [{
+          "in": "path",
+          "name": "internalId",
+          "description": "ID interno da transferencia",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }],
+        "responses": {
+          "200": {
+            "description": "Sucesso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/schemas/findPaymentOrderSuccess"
+                }
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/components/notFoundPaymentOrder"
+          },
+          "500": {
+            "$ref": "#/components/serverError"
+          }
+        }
+      }
+    }
+  },
+  "schemas": {
+    "paymentOrder": {
+      "type": "object",
+      "properties": {
+        "externalId": {
+          "type": "string",
+          "example": "123"
+        },
+        "amount": {
+          "type": "string",
+          "example": "100.65"
+        },
+        "expectedOn": {
+          "type": "string",
+          "example": "2023-08-11 16:34:00"
+        }
+      },
+      "required": ["externalId", "amount"]
+    },
+    "createPaymentOrderSuccess": {
+      "type": "object",
+      "properties": {
+        "internalId": {
+          "type": "string"
+        },
+        "status": {
+          "type": "string"
+        }
+      }
+    },
+    "findPaymentOrderSuccess": {
+      "type": "object",
+      "properties": {
+        "internalId": {
+          "type": "string"
+        },
+        "externalId": {
+          "type": "string"
+        },
+        "amount": {
+          "type": "string"
+        },
+        "expectedOn": {
+          "type": "string"
+        },
+        "status": {
+          "type": "string"
+        }
+      }
+    },
+    "invalidParams": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "example": "InvalidParamError"
+        },
+        "message": {
+          "type": "string",
+          "example": "Invalid param: externalId"
+        }
+      }
+    },
+    "notFoundPaymentOrder": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "example": "NotFoundError"
+        },
+        "message": {
+          "type": "string",
+          "example": "Resource Not Found"
+        }
+      }
+    },
+    "serverError": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "example": "InternalServerError"
+        },
+        "message": {
+          "type": "string",
+          "example": "Internal server error"
+        }
+      }
+    }
+  },
+  "components": {
+    "invalidParams": {
+      "description": "Parametros invalidos",
+      "content": {
+        "application/json": {
+          "schema": {
+            "$ref": "#/schemas/invalidParams"
+          }
+        }
+      }
+    },
+    "notFoundPaymentOrder": {
+      "description": "Transferencia nao encontrada",
+      "content": {
+        "application/json": {
+          "schema": {
+            "$ref": "#/schemas/notFoundPaymentOrder"
+          }
+        }
+      }
+    },
+    "serverError": {
+      "description": "Erro interno no servidor",
+      "content": {
+        "application/json": {
+          "schema": {
+            "$ref": "#/schemas/serverError"
+          }
+        }
+      }
+    }
+  }
+}
