@@ -13,7 +13,6 @@ import { faker } from '@faker-js/faker';
 
 type SutType = {
   sut: CreatePaymentOrder;
-  paymentOrderApiMock: PaymentOrderApiMock;
   paymentOrderMongoRepositoryMock: PaymentOrderMongoRepositoryMock;
   findPaymentOrderRepositoryMock: FindPaymentOrderMongoRepositoryMock;
   updatePaymentOrderMongoRepositoryMock: UpdatePaymentOrderMongoRepositoryMock;
