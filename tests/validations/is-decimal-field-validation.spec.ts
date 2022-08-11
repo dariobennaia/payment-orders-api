@@ -16,15 +16,17 @@ const makeSut = (): SutType => {
 describe('Is Decimal Validation', () => {
   test('Ensure not return an error if past two decimal places', async () => {
     const { sut } = makeSut();
-    const anyField = '10.00';
-    const validate = sut.validate({ anyField });
-    expect(typeof anyField).toBe('string');
-    expect(validate).toBe(undefined);
+    const cases = ['10.00', 10.01];
+
+    for (const anyField of cases) {
+      const validate = sut.validate({ anyField });
+      expect(validate).toBe(undefined);
+    }
   });
 
   test('Ensure return an error if not past two decimal places', async () => {
     const { sut } = makeSut();
-    const cases = ['1', 1, '1.1', 1.1, '1.111', 1.111];
+    const cases = ['1', 1, '1.1', 1.1, '1.111', 1.111, 10.00];
 
     for (const anyField of cases) {
       const validate = sut.validate({ anyField });
