@@ -1,1 +1,1 @@
-export * from './bank-transfer-api';
+export * from './bank-payment-order-api';
