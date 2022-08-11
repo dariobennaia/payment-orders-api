@@ -1,5 +1,5 @@
 import { Transfer } from '@/domain/usecases';
-import { PaymentOrdersController } from '@/presentation/controllers/payment-orders.controller';
+import { PaymentOrdersController } from '@/presentation/controllers';
 import { internalServerError } from '@/presentation/helpers';
 import { Controller } from '@/presentation/protocols';
 import {
