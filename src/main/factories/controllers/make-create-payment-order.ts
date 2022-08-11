@@ -1,6 +1,6 @@
-import { DbTransfer } from '@/data/usecases';
+import { DbCreatePaymentOrder } from '@/data/usecases';
 import { BankApiService } from '@/infra/bank';
-import { TransferRepositoryMongo } from '@/infra/db';
+import { PaymentOrderRepositoryMongo } from '@/infra/db';
 import { CreatePaymentOrdersController } from '@/presentation/controllers';
 import {
   DateFieldBigThenNow,
@@ -24,15 +24,15 @@ const makeValidationFields = () => {
 };
 
 const makePaymentOrder = () => {
-  const transferApi = new BankApiService();
-  const createTransferRepository = new TransferRepositoryMongo();
-  const findTransferRepository = new TransferRepositoryMongo();
-  const updateTransferRepository = new TransferRepositoryMongo();
-  return new DbTransfer(
-    transferApi,
-    createTransferRepository,
-    findTransferRepository,
-    updateTransferRepository,
+  const paymentOrderApi = new BankApiService();
+  const createPaymentOrderRepository = new PaymentOrderRepositoryMongo();
+  const findPaymentOrderRepository = new PaymentOrderRepositoryMongo();
+  const updatePaymentOrderRepository = new PaymentOrderRepositoryMongo();
+  return new DbCreatePaymentOrder(
+    paymentOrderApi,
+    createPaymentOrderRepository,
+    findPaymentOrderRepository,
+    updatePaymentOrderRepository,
   );
 };
 
