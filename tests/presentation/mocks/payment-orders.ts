@@ -1,4 +1,4 @@
-import { Transfer } from '@/domain/usecases';
+import { FindTransfer, Transfer } from '@/domain/usecases';
 import { faker } from '@faker-js/faker';
 
 type MockRequest = {
@@ -25,6 +25,20 @@ export class DbTransfer implements Transfer {
   };
 
   async send(): Promise<Transfer.Result> {
+    return this.result;
+  }
+}
+
+export class DbFindTransferMock implements FindTransfer {
+  result: FindTransfer.Result = {
+    externalId: faker.datatype.uuid(),
+    internalId: faker.datatype.uuid(),
+    amount: Number(faker.finance.amount()),
+    expectedOn: faker.date.past(),
+    status: 'CREATED',
+  };
+
+  async findById(id: string): Promise<FindTransfer.Result> {
     return this.result;
   }
 }
