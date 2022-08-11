@@ -1,7 +1,7 @@
 import { makeFindPaymentOrdersController } from '@/main/factories/controllers';
 import { requestMock, responseMock } from '@/tests/main/mocks';
 
-const request = requestMock({ body: {} });
+const request = requestMock({ params: { id: '' } });
 const response = responseMock({});
 
 describe('Make Find Payment Order Factory', () => {
