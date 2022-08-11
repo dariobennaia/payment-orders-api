@@ -31,7 +31,7 @@ implements
   async save(
     params: CreatePaymentOrderRepository.Params,
   ): Promise<PaymentOrderModel> {
-    const paymentOrderCollection = MongoHelper.getCollection('payment');
+    const paymentOrderCollection = MongoHelper.getCollection(this.collectionName);
     const sanitizedFills = this.sanitizedFills(params);
     const data = {
       ...sanitizedFills,
