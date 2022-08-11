@@ -24,6 +24,7 @@
     "no-restricted-syntax": "off",
     "max-classes-per-file": "off",
     "no-param-reassign": "off",
+    "@typescript-eslint/no-empty-function": "off",
     "import-helpers/order-imports": [
       "error",
       {
