@@ -12,7 +12,7 @@ export class DbFindTransfer implements FindTransfer {
     if (finded.length === 0) return null;
 
     const [{ id: internalId, status, ...rest }] = finded;
-    return { internalId, status: status[0].name, ...rest };
+    return { internalId, status: status.reverse()[0].name, ...rest };
   }
 }
 
