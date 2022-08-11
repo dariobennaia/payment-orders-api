@@ -41,10 +41,14 @@ implements
     id,
     ...params
   }: FindTransferRepository.Params): Promise<FindTransferRepository.Result> {
-    const transferCollection = MongoHelper.getCollection('transfer');
-    let filter = params as any;
-    if (id) filter = { ...params, _id: new ObjectId(id) };
-    const finded = await transferCollection.find(filter).toArray();
-    return MongoHelper.sanitizeMap(finded);
+    try {
+      const transferCollection = MongoHelper.getCollection('transfer');
+      let filter = params as any;
+      if (id) filter = { ...params, _id: new ObjectId(id) };
+      const finded = await transferCollection.find(filter).toArray();
+      return MongoHelper.sanitizeMap(finded);
+    } catch {
+      return [];
+    }
   }
 }
