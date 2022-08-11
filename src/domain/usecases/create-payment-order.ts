@@ -1,8 +1,8 @@
-export interface PaymentOrder {
-  send: (params: PaymentOrder.Params) => Promise<PaymentOrder.Result>
+export interface CreatePaymentOrder {
+  send: (params: CreatePaymentOrder.Params) => Promise<CreatePaymentOrder.Result>
 }
 
-export namespace PaymentOrder {
+export namespace CreatePaymentOrder {
   export type Params = {
     externalId: string;
     amount: number;

@@ -1,8 +1,8 @@
-export interface FindTransfer {
-  findById: (id: string) => Promise<FindTransfer.Result | null>
+export interface FindPaymentOrder {
+  findById: (id: string) => Promise<FindPaymentOrder.Result | null>
 }
 
-export namespace FindTransfer {
+export namespace FindPaymentOrder {
   export type Result = {
     internalId: string;
     externalId: string;
