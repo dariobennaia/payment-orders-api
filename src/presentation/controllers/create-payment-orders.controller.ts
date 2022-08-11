@@ -1,10 +1,10 @@
-import { Transfer } from '@/domain/usecases';
+import { CreatePaymentOrder } from '@/domain/usecases';
 import { created, internalServerError, methodNotAllowed } from '@/presentation/helpers';
 import { Controller, HttpResponse, Validation } from '@/presentation/protocols';
 
 export class CreatePaymentOrdersController implements Controller {
   constructor(
-    private readonly transfer: Transfer,
+    private readonly createPaymentOrder: CreatePaymentOrder,
     private readonly validation: Validation,
   ) {}
 
@@ -17,7 +17,7 @@ export class CreatePaymentOrdersController implements Controller {
     }
 
     try {
-      const body = await this.transfer.send(httpRequest);
+      const body = await this.createPaymentOrder.send(httpRequest);
       return created(body);
     } catch (err) {
       return internalServerError(err);
@@ -26,5 +26,5 @@ export class CreatePaymentOrdersController implements Controller {
 }
 
 export namespace CreatePaymentOrdersController {
-  export type Request = Transfer.Params;
+  export type Request = CreatePaymentOrder.Params;
 }
