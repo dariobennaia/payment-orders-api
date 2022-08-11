@@ -1,5 +1,9 @@
 import { JobProcessPaymentOrder } from '@/data/usecases';
-import { SchedulePaymentOrderMock } from '@/tests/data/mocks';
+import {
+  FindAgregatePaymentOrderMongoRepositoryMock,
+  SchedulePaymentOrderMock,
+  UpdateTransferMongoRepositoryMock,
+} from '@/tests/data/mocks';
 
 type SutType = {
   sut: JobProcessPaymentOrder;
@@ -8,7 +12,13 @@ type SutType = {
 
 const makeSut = (): SutType => {
   const schedulePaymentOrderMock = new SchedulePaymentOrderMock();
-  const sut = new JobProcessPaymentOrder(schedulePaymentOrderMock);
+  const findRepositoryMock = new FindAgregatePaymentOrderMongoRepositoryMock();
+  const updateRepositoryMock = new UpdateTransferMongoRepositoryMock();
+  const sut = new JobProcessPaymentOrder(
+    schedulePaymentOrderMock,
+    findRepositoryMock,
+    updateRepositoryMock,
+  );
   return {
     sut,
     schedulePaymentOrderMock,
@@ -18,7 +28,9 @@ const makeSut = (): SutType => {
 describe('Job Process Payment Order', () => {
   test('Should call', async () => {
     const { sut, schedulePaymentOrderMock } = makeSut();
-    jest.spyOn(schedulePaymentOrderMock, 'schedule').mockImplementationOnce(() => {});
+    jest
+      .spyOn(schedulePaymentOrderMock, 'schedule')
+      .mockImplementationOnce(() => {});
     await sut.run();
     expect(schedulePaymentOrderMock.schedule).toHaveBeenCalled();
   });

@@ -3,6 +3,7 @@ import {
   CreateTransferRepository,
   FindTransferRepository,
   UpdateTransferRepository,
+  FindAgregatePaymentOrderRepository,
 } from '@/data/protocols';
 import { TransferModel, TransferModelResult } from '@/domain/models';
 import { Transfer } from '@/domain/usecases';
@@ -69,6 +70,23 @@ export class FindTransferMongoRepositoryMock implements FindTransferRepository {
   async findByParams(
     params: FindTransferRepository.Params,
   ): Promise<FindTransferRepository.Result> {
+    this.params = params;
+    return [
+      {
+        ...resultFindTransferRepository(),
+        ...params,
+      },
+    ];
+  }
+}
+
+export class FindAgregatePaymentOrderMongoRepositoryMock
+implements FindAgregatePaymentOrderRepository {
+  params: any;
+
+  async findAgregate(
+    params: any,
+  ): Promise<FindAgregatePaymentOrderRepository.Result> {
     this.params = params;
     return [
       {
