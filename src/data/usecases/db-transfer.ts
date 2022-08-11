@@ -39,7 +39,7 @@ export class DbTransfer implements Transfer {
     });
     if (find.length > 0) {
       const [{ id, status }] = find;
-      return { internalId: id, status: status[0].name };
+      return { internalId: id, status: status.reverse()[0].name };
     }
 
     const result = await this.createTransfer(params);
