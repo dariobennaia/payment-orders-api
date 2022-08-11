@@ -1,49 +1,18 @@
-import { DbTransfer } from '@/data/usecases';
-import { BankApiService } from '@/infra/bank';
+import { DbFindTransfer } from '@/data/usecases';
 import { TransferRepositoryMongo } from '@/infra/db';
-import { PaymentOrdersController } from '@/presentation/controllers';
-import {
-  DateFieldBigThenNow,
-  IsDecimalFieldValidation,
-  IsStringFieldValidation,
-  RequiredFieldValidation,
-  ValidationComposite,
-} from '@/validations';
+import { FindPaymentOrdersController } from '@/presentation/controllers';
 import { Request, Response } from 'express';
 
-const makeValidationFields = () => {
-  const validations = [
-    new RequiredFieldValidation('externalId'),
-    new IsStringFieldValidation('externalId'),
-    new RequiredFieldValidation('amount'),
-    new IsStringFieldValidation('amount'),
-    new IsDecimalFieldValidation('amount'),
-    new DateFieldBigThenNow('expectedOn'),
-  ];
-  return new ValidationComposite(validations);
-};
-
-const makePaymentOrder = () => {
-  const transferApi = new BankApiService();
-  const createTransferRepository = new TransferRepositoryMongo();
+const makeFindPaymentOrder = () => {
   const findTransferRepository = new TransferRepositoryMongo();
-  const updateTransferRepository = new TransferRepositoryMongo();
-  return new DbTransfer(
-    transferApi,
-    createTransferRepository,
-    findTransferRepository,
-    updateTransferRepository,
-  );
+  return new DbFindTransfer(findTransferRepository);
 };
 
-export const makePaymentOrdersController = async (
+export const makeFindPaymentOrdersController = async (
   req: Request,
   res: Response,
 ): Promise<any> => {
-  const controller = new PaymentOrdersController(
-    makePaymentOrder(),
-    makeValidationFields(),
-  );
+  const controller = new FindPaymentOrdersController(makeFindPaymentOrder());
 
   const { statusCode, body } = await controller.handle(req.body);
   return res.status(statusCode).json(body);
