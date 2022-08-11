@@ -1,4 +1,4 @@
-import { TransferModelResult } from '@/domain/models';
+import { PaymentOrderModelResult } from '@/domain/models';
 
 export interface FindAgregatePaymentOrderRepository {
   findAgregate: (
@@ -7,5 +7,5 @@ export interface FindAgregatePaymentOrderRepository {
 }
 
 export namespace FindAgregatePaymentOrderRepository {
-  export type Result = TransferModelResult[];
+  export type Result = PaymentOrderModelResult[];
 }
