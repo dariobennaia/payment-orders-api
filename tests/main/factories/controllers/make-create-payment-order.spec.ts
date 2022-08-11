@@ -1,12 +1,12 @@
-import { makePaymentOrdersController } from '@/main/factories/controllers';
+import { makeCreatePaymentOrdersController } from '@/main/factories/controllers';
 import { requestMock, responseMock } from '@/tests/main/mocks';
 
 const request = requestMock({ body: {} });
 const response = responseMock({});
 
-describe('Make Payment Order Factory', () => {
+describe('Make Create Payment Order Factory', () => {
   test('Should call', async () => {
-    const sut = await makePaymentOrdersController(request, response);
+    const sut = await makeCreatePaymentOrdersController(request, response);
     expect(sut).toEqual({});
   });
 });
