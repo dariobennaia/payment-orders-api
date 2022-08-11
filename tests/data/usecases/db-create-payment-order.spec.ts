@@ -20,19 +20,16 @@ type SutType = {
 };
 
 const makeSut = (): SutType => {
-  const paymentOrderApiMock = new PaymentOrderApiMock();
   const paymentOrderMongoRepositoryMock = new PaymentOrderMongoRepositoryMock();
   const updatePaymentOrderMongoRepositoryMock = new UpdatePaymentOrderMongoRepositoryMock();
   const findPaymentOrderRepositoryMock = new FindPaymentOrderMongoRepositoryMock();
   const sut = new DbCreatePaymentOrder(
-    paymentOrderApiMock,
     paymentOrderMongoRepositoryMock,
     findPaymentOrderRepositoryMock,
     updatePaymentOrderMongoRepositoryMock,
   );
   return {
     sut,
-    paymentOrderApiMock,
     paymentOrderMongoRepositoryMock,
     findPaymentOrderRepositoryMock,
     updatePaymentOrderMongoRepositoryMock,

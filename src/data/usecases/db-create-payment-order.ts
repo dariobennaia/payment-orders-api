@@ -1,5 +1,4 @@
 import {
-  PaymentOrderApi,
   CreatePaymentOrderRepository,
   FindPaymentOrderRepository,
   UpdatePaymentOrderRepository,
@@ -8,7 +7,6 @@ import { CreatePaymentOrder } from '@/domain/usecases';
 
 export class DbCreatePaymentOrder implements CreatePaymentOrder {
   constructor(
-    private readonly paymentOrderApi: PaymentOrderApi,
     private readonly createPaymentOrderRepository: CreatePaymentOrderRepository,
     private readonly findPaymentOrderRepository: FindPaymentOrderRepository,
     private readonly updatePaymentOrderRepository: UpdatePaymentOrderRepository,
@@ -48,8 +46,6 @@ export class DbCreatePaymentOrder implements CreatePaymentOrder {
     if (new Date(params.expectedOn) > new Date()) {
       return this.schedulePaymentOrder(result.internalId);
     }
-
-    await this.paymentOrderApi.send(params);
     return result;
   }
 }
