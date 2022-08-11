@@ -14,6 +14,6 @@ export const makeFindPaymentOrdersController = async (
 ): Promise<any> => {
   const controller = new FindPaymentOrdersController(makeFindPaymentOrder());
 
-  const { statusCode, body } = await controller.handle(req.body);
+  const { statusCode, body } = await controller.handle(req.params.id);
   return res.status(statusCode).json(body);
 };
