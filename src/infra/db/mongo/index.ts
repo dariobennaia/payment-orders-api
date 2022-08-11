@@ -1,2 +1,2 @@
 export * from './mongo-helper';
-export * from './transfer-repository-mongo';
+export * from './payment-order-repository-mongo';
