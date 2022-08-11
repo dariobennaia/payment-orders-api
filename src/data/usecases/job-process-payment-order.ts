@@ -3,7 +3,7 @@
 import {
   FindAgregatePaymentOrderRepository,
   SchedulePaymentOrder,
-  UpdateTransferRepository,
+  UpdatePaymentOrderRepository,
 } from '@/data/protocols';
 import { ProcessPaymentOrder } from '@/domain/usecases';
 
@@ -12,7 +12,7 @@ export class JobProcessPaymentOrder implements ProcessPaymentOrder {
   constructor(
     private readonly jobSchedule: SchedulePaymentOrder,
     private readonly findRepository: FindAgregatePaymentOrderRepository,
-    private readonly updateRepository: UpdateTransferRepository,
+    private readonly updateRepository: UpdatePaymentOrderRepository,
   ) {}
 
   private async cb(): Promise<void> {
