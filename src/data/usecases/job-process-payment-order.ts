@@ -2,17 +2,18 @@
 /* eslint-disable no-console */
 import {
   FindAgregatePaymentOrderRepository,
+  PaymentOrderApi,
   SchedulePaymentOrder,
   UpdatePaymentOrderRepository,
 } from '@/data/protocols';
 import { ProcessPaymentOrder } from '@/domain/usecases';
 
-const shufleNewStatus = (): any => ['APPROVED', 'REJECTED'].sort(() => 0.5 - Math.random())[0];
 export class JobProcessPaymentOrder implements ProcessPaymentOrder {
   constructor(
     private readonly jobSchedule: SchedulePaymentOrder,
     private readonly findRepository: FindAgregatePaymentOrderRepository,
     private readonly updateRepository: UpdatePaymentOrderRepository,
+    private readonly paymentOrderApi: PaymentOrderApi,
   ) {}
 
   private async cb(): Promise<void> {
@@ -41,8 +42,9 @@ export class JobProcessPaymentOrder implements ProcessPaymentOrder {
         continue;
       }
 
+      const nameStatus = this.paymentOrderApi.send({}) as any;
       this.updateRepository.updateById(id, {
-        status: { name: shufleNewStatus() },
+        status: { name: nameStatus },
       });
       console.log(`Executing Payment Order ${id}`);
     }

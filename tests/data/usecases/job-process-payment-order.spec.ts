@@ -1,5 +1,6 @@
 import { JobProcessPaymentOrder } from '@/data/usecases';
 import {
+  BankApiServiceMock,
   FindAgregatePaymentOrderMongoRepositoryMock,
   SchedulePaymentOrderMock,
   UpdatePaymentOrderMongoRepositoryMock,
@@ -14,10 +15,12 @@ const makeSut = (): SutType => {
   const schedulePaymentOrderMock = new SchedulePaymentOrderMock();
   const findRepositoryMock = new FindAgregatePaymentOrderMongoRepositoryMock();
   const updateRepositoryMock = new UpdatePaymentOrderMongoRepositoryMock();
+  const bankApiServiceMock = new BankApiServiceMock();
   const sut = new JobProcessPaymentOrder(
     schedulePaymentOrderMock,
     findRepositoryMock,
     updateRepositoryMock,
+    bankApiServiceMock,
   );
   return {
     sut,
