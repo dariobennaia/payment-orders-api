@@ -9,6 +9,8 @@ export class DbFindTransfer implements FindTransfer {
   async findById(id: string): Promise<DbFindTransfer.Result> {
     const finded = await this.findTransferRepository.findByParams({ id });
 
+    if (finded.length === 0) return null;
+
     const [{ id: internalId, status, ...rest }] = finded;
     return { internalId, status: status[0].name, ...rest };
   }
