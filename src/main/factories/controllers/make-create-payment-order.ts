@@ -1,5 +1,4 @@
 import { DbCreatePaymentOrder } from '@/data/usecases';
-import { BankApiService } from '@/infra/bank';
 import { PaymentOrderRepositoryMongo } from '@/infra/db';
 import { CreatePaymentOrdersController } from '@/presentation/controllers';
 import {
@@ -24,12 +23,10 @@ const makeValidationFields = () => {
 };
 
 const makePaymentOrder = () => {
-  const paymentOrderApi = new BankApiService();
   const createPaymentOrderRepository = new PaymentOrderRepositoryMongo();
   const findPaymentOrderRepository = new PaymentOrderRepositoryMongo();
   const updatePaymentOrderRepository = new PaymentOrderRepositoryMongo();
   return new DbCreatePaymentOrder(
-    paymentOrderApi,
     createPaymentOrderRepository,
     findPaymentOrderRepository,
     updatePaymentOrderRepository,
