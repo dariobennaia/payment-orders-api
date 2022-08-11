@@ -2,14 +2,14 @@ import { Transfer } from '@/domain/usecases';
 import { created, internalServerError, methodNotAllowed } from '@/presentation/helpers';
 import { Controller, HttpResponse, Validation } from '@/presentation/protocols';
 
-export class PaymentOrdersController implements Controller {
+export class CreatePaymentOrdersController implements Controller {
   constructor(
     private readonly transfer: Transfer,
     private readonly validation: Validation,
   ) {}
 
   async handle(
-    httpRequest: PaymentOrdersController.Request,
+    httpRequest: CreatePaymentOrdersController.Request,
   ): Promise<HttpResponse> {
     const error = this.validation.validate(httpRequest);
     if (error) {
@@ -25,6 +25,6 @@ export class PaymentOrdersController implements Controller {
   }
 }
 
-export namespace PaymentOrdersController {
+export namespace CreatePaymentOrdersController {
   export type Request = Transfer.Params;
 }
