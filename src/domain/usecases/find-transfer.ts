@@ -1,5 +1,5 @@
 export interface FindTransfer {
-  findById: (id: string) => Promise<FindTransfer.Result>
+  findById: (id: string) => Promise<FindTransfer.Result | null>
 }
 
 export namespace FindTransfer {
