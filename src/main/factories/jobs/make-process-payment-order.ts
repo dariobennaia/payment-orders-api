@@ -1,12 +1,12 @@
 import { JobProcessPaymentOrder } from '@/data/usecases';
-import { TransferRepositoryMongo } from '@/infra/db';
+import { PaymentOrderRepositoryMongo } from '@/infra/db';
 import { Schedule } from '@/infra/schedule';
 import { ProcessPaymentOrderJob } from '@/presentation/jobs';
 
 const makeProcess = () => {
   const schedule = new Schedule();
-  const findRepository = new TransferRepositoryMongo();
-  const updateRepository = new TransferRepositoryMongo();
+  const findRepository = new PaymentOrderRepositoryMongo();
+  const updateRepository = new PaymentOrderRepositoryMongo();
   return new JobProcessPaymentOrder(schedule, findRepository, updateRepository);
 };
 

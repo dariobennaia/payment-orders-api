@@ -1,11 +1,11 @@
-import { DbFindTransfer } from '@/data/usecases';
-import { TransferRepositoryMongo } from '@/infra/db';
+import { DbFindPaymentOrder } from '@/data/usecases';
+import { PaymentOrderRepositoryMongo } from '@/infra/db';
 import { FindPaymentOrdersController } from '@/presentation/controllers';
 import { Request, Response } from 'express';
 
 const makeFindPaymentOrder = () => {
-  const findTransferRepository = new TransferRepositoryMongo();
-  return new DbFindTransfer(findTransferRepository);
+  const findPaymentOrderRepository = new PaymentOrderRepositoryMongo();
+  return new DbFindPaymentOrder(findPaymentOrderRepository);
 };
 
 export const makeFindPaymentOrdersController = async (
