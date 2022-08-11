@@ -1,41 +1,41 @@
-import { DbFindTransfer } from '@/data/usecases';
+import { DbFindPaymentOrder } from '@/data/usecases';
 import {
-  FindTransferMongoRepositoryMock,
-  resultFindTransferRepository,
+  FindPaymentOrderMongoRepositoryMock,
+  resultFindPaymentOrderRepository,
 } from '@/tests/data/mocks';
 
 type SutType = {
-  sut: DbFindTransfer;
-  findTransferRepositoryMock: FindTransferMongoRepositoryMock;
+  sut: DbFindPaymentOrder;
+  findPaymentOrderRepositoryMock: FindPaymentOrderMongoRepositoryMock;
 };
 
 const makeSut = (): SutType => {
-  const findTransferRepositoryMock = new FindTransferMongoRepositoryMock();
-  const sut = new DbFindTransfer(findTransferRepositoryMock);
+  const findPaymentOrderRepositoryMock = new FindPaymentOrderMongoRepositoryMock();
+  const sut = new DbFindPaymentOrder(findPaymentOrderRepositoryMock);
   return {
     sut,
-    findTransferRepositoryMock,
+    findPaymentOrderRepositoryMock,
   };
 };
 
-describe('Db Find Transfer', () => {
-  test('Should return find tranfer', async () => {
-    const { sut, findTransferRepositoryMock } = makeSut();
+describe('Db Find Payment Order', () => {
+  test('Should return find payment order', async () => {
+    const { sut, findPaymentOrderRepositoryMock } = makeSut();
 
-    const { id: internalId, status, ...rest } = resultFindTransferRepository();
+    const { id: internalId, status, ...rest } = resultFindPaymentOrderRepository();
     jest
-      .spyOn(findTransferRepositoryMock, 'findByParams')
+      .spyOn(findPaymentOrderRepositoryMock, 'findByParams')
       .mockImplementationOnce(async () => [{ internalId, status, ...rest }] as any);
 
     const finded = await sut.findById(internalId);
     expect(finded).toEqual({ internalId, status: status[0].name, ...rest });
   });
 
-  test('Should return null if not found tranfer', async () => {
-    const { sut, findTransferRepositoryMock } = makeSut();
+  test('Should return null if not found payment order', async () => {
+    const { sut, findPaymentOrderRepositoryMock } = makeSut();
 
     jest
-      .spyOn(findTransferRepositoryMock, 'findByParams')
+      .spyOn(findPaymentOrderRepositoryMock, 'findByParams')
       .mockImplementationOnce(async () => []);
 
     const finded = await sut.findById('');

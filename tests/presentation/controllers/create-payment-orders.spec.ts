@@ -1,9 +1,9 @@
-import { Transfer } from '@/domain/usecases';
+import { CreatePaymentOrder } from '@/domain/usecases';
 import { CreatePaymentOrdersController } from '@/presentation/controllers';
 import { internalServerError } from '@/presentation/helpers';
 import { Controller } from '@/presentation/protocols';
 import {
-  DbTransfer,
+  DbCreatePaymentOrderMock,
   mockRequest,
   mockResponse,
 } from '@/tests/presentation/mocks';
@@ -12,32 +12,32 @@ import { ValidationComposite } from '@/validations';
 
 type SutType = {
   sut: Controller;
-  dbTransferSpy: Transfer;
+  dbPaymentOrderSpy: CreatePaymentOrder;
   validationsSpy: ValidationSpy[];
 };
 
 const makeSut = (): SutType => {
-  const dbTransferSpy = new DbTransfer();
+  const dbPaymentOrderSpy = new DbCreatePaymentOrderMock();
   const validationsSpy = [
     new ValidationSpy(),
   ];
   const composite = new ValidationComposite(validationsSpy);
-  const sut = new CreatePaymentOrdersController(dbTransferSpy, composite);
+  const sut = new CreatePaymentOrdersController(dbPaymentOrderSpy, composite);
   return {
     sut,
-    dbTransferSpy,
+    dbPaymentOrderSpy,
     validationsSpy,
   };
 };
 
 describe('Payment Orders Controller', () => {
   test('Should return transaction created', async () => {
-    const { sut, dbTransferSpy } = makeSut();
+    const { sut, dbPaymentOrderSpy } = makeSut();
 
     const httpRequest = mockRequest();
     const response = mockResponse();
     jest
-      .spyOn(dbTransferSpy, 'send')
+      .spyOn(dbPaymentOrderSpy, 'send')
       .mockImplementation(async () => response);
 
     const httpResponse = await sut.handle(httpRequest.body);
@@ -55,12 +55,12 @@ describe('Payment Orders Controller', () => {
     expect(httpResponse.body).toEqual(validationsSpy[0].error);
   });
 
-  test('Should return 500 internal server error if not transfer order', async () => {
-    const { sut, dbTransferSpy } = makeSut();
+  test('Should return 500 internal server error if not payment order order', async () => {
+    const { sut, dbPaymentOrderSpy } = makeSut();
 
     const httpRequest = mockRequest();
     jest
-      .spyOn(dbTransferSpy, 'send')
+      .spyOn(dbPaymentOrderSpy, 'send')
       .mockImplementation(async () => { throw internalServerError(new Error()); });
 
     const httpResponse = await sut.handle(httpRequest);

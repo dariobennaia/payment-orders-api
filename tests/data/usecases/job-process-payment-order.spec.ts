@@ -2,7 +2,7 @@ import { JobProcessPaymentOrder } from '@/data/usecases';
 import {
   FindAgregatePaymentOrderMongoRepositoryMock,
   SchedulePaymentOrderMock,
-  UpdateTransferMongoRepositoryMock,
+  UpdatePaymentOrderMongoRepositoryMock,
 } from '@/tests/data/mocks';
 
 type SutType = {
@@ -13,7 +13,7 @@ type SutType = {
 const makeSut = (): SutType => {
   const schedulePaymentOrderMock = new SchedulePaymentOrderMock();
   const findRepositoryMock = new FindAgregatePaymentOrderMongoRepositoryMock();
-  const updateRepositoryMock = new UpdateTransferMongoRepositoryMock();
+  const updateRepositoryMock = new UpdatePaymentOrderMongoRepositoryMock();
   const sut = new JobProcessPaymentOrder(
     schedulePaymentOrderMock,
     findRepositoryMock,

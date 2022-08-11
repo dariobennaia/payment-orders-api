@@ -1,46 +1,46 @@
-import { DbTransfer } from '@/data/usecases';
-import { Transfer } from '@/domain/usecases/transfer';
+import { DbCreatePaymentOrder } from '@/data/usecases';
+import { CreatePaymentOrder } from '@/domain/usecases';
 import {
-  resultCreateTransferRepository,
-  TransferApiMock,
-  TransferMongoRepositoryMock,
-  FindTransferMongoRepositoryMock,
-  resultFindTransferRepository,
-  UpdateTransferMongoRepositoryMock,
+  resultCreatePaymentOrderRepository,
+  PaymentOrderApiMock,
+  PaymentOrderMongoRepositoryMock,
+  FindPaymentOrderMongoRepositoryMock,
+  resultFindPaymentOrderRepository,
+  UpdatePaymentOrderMongoRepositoryMock,
 } from '@/tests/data/mocks';
 import { mockRequest } from '@/tests/presentation/mocks';
 import { faker } from '@faker-js/faker';
 
 type SutType = {
-  sut: Transfer;
-  transferApiMock: TransferApiMock;
-  transferMongoRepositoryMock: TransferMongoRepositoryMock;
-  findTransferRepositoryMock: FindTransferMongoRepositoryMock;
-  updateTransferMongoRepositoryMock: UpdateTransferMongoRepositoryMock;
+  sut: CreatePaymentOrder;
+  paymentOrderApiMock: PaymentOrderApiMock;
+  paymentOrderMongoRepositoryMock: PaymentOrderMongoRepositoryMock;
+  findPaymentOrderRepositoryMock: FindPaymentOrderMongoRepositoryMock;
+  updatePaymentOrderMongoRepositoryMock: UpdatePaymentOrderMongoRepositoryMock;
 };
 
 const makeSut = (): SutType => {
-  const transferApiMock = new TransferApiMock();
-  const transferMongoRepositoryMock = new TransferMongoRepositoryMock();
-  const updateTransferMongoRepositoryMock = new UpdateTransferMongoRepositoryMock();
-  const findTransferRepositoryMock = new FindTransferMongoRepositoryMock();
-  const sut = new DbTransfer(
-    transferApiMock,
-    transferMongoRepositoryMock,
-    findTransferRepositoryMock,
-    updateTransferMongoRepositoryMock,
+  const paymentOrderApiMock = new PaymentOrderApiMock();
+  const paymentOrderMongoRepositoryMock = new PaymentOrderMongoRepositoryMock();
+  const updatePaymentOrderMongoRepositoryMock = new UpdatePaymentOrderMongoRepositoryMock();
+  const findPaymentOrderRepositoryMock = new FindPaymentOrderMongoRepositoryMock();
+  const sut = new DbCreatePaymentOrder(
+    paymentOrderApiMock,
+    paymentOrderMongoRepositoryMock,
+    findPaymentOrderRepositoryMock,
+    updatePaymentOrderMongoRepositoryMock,
   );
   return {
     sut,
-    transferApiMock,
-    transferMongoRepositoryMock,
-    findTransferRepositoryMock,
-    updateTransferMongoRepositoryMock,
+    paymentOrderApiMock,
+    paymentOrderMongoRepositoryMock,
+    findPaymentOrderRepositoryMock,
+    updatePaymentOrderMongoRepositoryMock,
   };
 };
 
-describe('Db Transfer', () => {
-  test('Should return transaction created', async () => {
+describe('Db Create Payment Order', () => {
+  test('Should return payment order created', async () => {
     const { sut } = makeSut();
     const { body } = mockRequest();
     const created = await sut.send(body);
@@ -48,25 +48,25 @@ describe('Db Transfer', () => {
     expect(created.internalId).toBeDefined();
   });
 
-  test('Should schedule transfer', async () => {
+  test('Should schedule payment order', async () => {
     const {
       sut,
-      transferMongoRepositoryMock,
-      findTransferRepositoryMock,
-      updateTransferMongoRepositoryMock,
+      paymentOrderMongoRepositoryMock,
+      findPaymentOrderRepositoryMock,
+      updatePaymentOrderMongoRepositoryMock,
     } = makeSut();
 
     jest
-      .spyOn(findTransferRepositoryMock, 'findByParams')
+      .spyOn(findPaymentOrderRepositoryMock, 'findByParams')
       .mockImplementationOnce(async () => []);
 
     jest
-      .spyOn(transferMongoRepositoryMock, 'save')
-      .mockImplementationOnce(async () => resultCreateTransferRepository({}));
+      .spyOn(paymentOrderMongoRepositoryMock, 'save')
+      .mockImplementationOnce(async () => resultCreatePaymentOrderRepository({}));
 
     jest
-      .spyOn(updateTransferMongoRepositoryMock, 'updateById')
-      .mockImplementationOnce(async () => resultCreateTransferRepository({ status: { name: 'SCHEDULED' } }));
+      .spyOn(updatePaymentOrderMongoRepositoryMock, 'updateById')
+      .mockImplementationOnce(async () => resultCreatePaymentOrderRepository({ status: { name: 'SCHEDULED' } }));
 
     const { body } = mockRequest();
     const created = await sut.send({
@@ -78,25 +78,25 @@ describe('Db Transfer', () => {
     expect(created.internalId).toBeDefined();
   });
 
-  test('Should schedule transfer if string date', async () => {
+  test('Should schedule PaymentOrder if string date', async () => {
     const {
       sut,
-      transferMongoRepositoryMock,
-      findTransferRepositoryMock,
-      updateTransferMongoRepositoryMock,
+      paymentOrderMongoRepositoryMock,
+      findPaymentOrderRepositoryMock,
+      updatePaymentOrderMongoRepositoryMock,
     } = makeSut();
 
     jest
-      .spyOn(findTransferRepositoryMock, 'findByParams')
+      .spyOn(findPaymentOrderRepositoryMock, 'findByParams')
       .mockImplementationOnce(async () => []);
 
     jest
-      .spyOn(transferMongoRepositoryMock, 'save')
-      .mockImplementationOnce(async () => resultCreateTransferRepository({}));
+      .spyOn(paymentOrderMongoRepositoryMock, 'save')
+      .mockImplementationOnce(async () => resultCreatePaymentOrderRepository({}));
 
     jest
-      .spyOn(updateTransferMongoRepositoryMock, 'updateById')
-      .mockImplementationOnce(async () => resultCreateTransferRepository({ status: { name: 'SCHEDULED' } }));
+      .spyOn(updatePaymentOrderMongoRepositoryMock, 'updateById')
+      .mockImplementationOnce(async () => resultCreatePaymentOrderRepository({ status: { name: 'SCHEDULED' } }));
 
     const { body } = mockRequest();
     const created = await sut.send({
@@ -108,12 +108,14 @@ describe('Db Transfer', () => {
     expect(created.internalId).toBeDefined();
   });
 
-  test('Should return last status if already transfer', async () => {
-    const { sut, findTransferRepositoryMock } = makeSut();
+  test('Should return last status if already payment order', async () => {
+    const { sut, findPaymentOrderRepositoryMock } = makeSut();
 
     jest
-      .spyOn(findTransferRepositoryMock, 'findByParams')
-      .mockImplementationOnce(async () => resultFindTransferRepository() as any);
+      .spyOn(findPaymentOrderRepositoryMock, 'findByParams')
+      .mockImplementationOnce(
+        async () => resultFindPaymentOrderRepository() as any,
+      );
 
     const { body } = mockRequest();
     const created = await sut.send(body);

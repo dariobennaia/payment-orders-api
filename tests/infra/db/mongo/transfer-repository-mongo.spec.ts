@@ -1,30 +1,32 @@
-import { MongoHelper, TransferRepositoryMongo } from '@/infra/db';
+import { MongoHelper, PaymentOrderRepositoryMongo } from '@/infra/db';
 import env from '@/main/config/env';
-import { dataCreateTransferMock } from '@/tests/infra/mocks';
+import { dataCreatePaymentOrderMock } from '@/tests/infra/mocks';
 import { faker } from '@faker-js/faker';
 
 type SutType = {
-  sut: TransferRepositoryMongo;
+  sut: PaymentOrderRepositoryMongo;
 };
 
 const makeSut = (): SutType => ({
-  sut: new TransferRepositoryMongo(),
+  sut: new PaymentOrderRepositoryMongo(),
 });
 
-describe('Transfer Repository Mongo', () => {
+describe('Payment Order Repository Mongo', () => {
   beforeAll(async () => {
     await MongoHelper.connect(env.mongoUrl);
   });
 
   afterAll(async () => {
-    await MongoHelper.getCollection('transfer')
+    const { sut } = makeSut();
+    await MongoHelper.getCollection(sut.collectionName)
       .drop()
       .catch(() => null);
     await MongoHelper.disconnect();
   });
 
   beforeEach(async () => {
-    await MongoHelper.getCollection('transfer')
+    const { sut } = makeSut();
+    await MongoHelper.getCollection(sut.collectionName)
       .drop()
       .catch(() => null);
   });
@@ -32,7 +34,7 @@ describe('Transfer Repository Mongo', () => {
   describe('save()', () => {
     test('Should return an account on success', async () => {
       const { sut } = makeSut();
-      const addAccountParams = dataCreateTransferMock();
+      const addAccountParams = dataCreatePaymentOrderMock();
       const { id, ...rest } = await sut.save(addAccountParams);
       expect(rest).toEqual(addAccountParams);
       expect(id).toBeDefined();
@@ -40,9 +42,9 @@ describe('Transfer Repository Mongo', () => {
   });
 
   describe('update()', () => {
-    test('Should schedule a transfer', async () => {
+    test('Should schedule a payment order', async () => {
       const { sut } = makeSut();
-      const created = await sut.save(dataCreateTransferMock());
+      const created = await sut.save(dataCreatePaymentOrderMock());
       const updated = await sut.updateById(created.id, {
         status: { name: 'SCHEDULED' },
       });
@@ -55,9 +57,9 @@ describe('Transfer Repository Mongo', () => {
   });
 
   describe('findByParams()', () => {
-    test('Should returns a transfer', async () => {
+    test('Should returns a payment order', async () => {
       const { sut } = makeSut();
-      const created = await sut.save(dataCreateTransferMock());
+      const created = await sut.save(dataCreatePaymentOrderMock());
       const finded = await sut.findByParams({ id: created.id });
 
       expect(created).toBeDefined();
@@ -65,7 +67,7 @@ describe('Transfer Repository Mongo', () => {
       expect(finded[0].id).toBe(created.id);
     });
 
-    test('Should returns an empty array if not found transfers', async () => {
+    test('Should returns an empty array if not found payment orders', async () => {
       const { sut } = makeSut();
       const finded = await sut.findByParams({
         id: faker.database.mongodbObjectId(),
