@@ -1,6 +1,7 @@
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable prefer-destructuring */
 import {
+  FindAgregatePaymentOrderRepository,
   CreateTransferRepository,
   FindTransferRepository,
   UpdateTransferRepository,
@@ -13,7 +14,8 @@ export class TransferRepositoryMongo
 implements
     CreateTransferRepository,
     UpdateTransferRepository,
-    FindTransferRepository {
+    FindTransferRepository,
+    FindAgregatePaymentOrderRepository {
   private sanitizedFills(params: any): any {
     let result = {};
     Object.keys(params).forEach((key) => {
@@ -57,6 +59,18 @@ implements
       let filter = params as any;
       if (id) filter = { ...params, _id: new ObjectId(id) };
       const finded = await transferCollection.find(filter).toArray();
+      return MongoHelper.sanitizeMap(finded);
+    } catch {
+      return [];
+    }
+  }
+
+  async findAgregate(
+    params: any,
+  ): Promise<FindAgregatePaymentOrderRepository.Result> {
+    try {
+      const transferCollection = MongoHelper.getCollection('transfer');
+      const finded = await transferCollection.aggregate(params).toArray();
       return MongoHelper.sanitizeMap(finded);
     } catch {
       return [];
