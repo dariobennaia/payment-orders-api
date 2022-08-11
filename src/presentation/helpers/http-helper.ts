@@ -11,6 +11,11 @@ export const methodNotAllowed = ({ name, message }: Error): HttpResponse => ({
   body: { name, message },
 });
 
+export const notFound = ({ name, message }: Error): HttpResponse => ({
+  statusCode: 404,
+  body: { name, message },
+});
+
 export const created = (data: any): HttpResponse => ({
   statusCode: 201,
   body: data,
