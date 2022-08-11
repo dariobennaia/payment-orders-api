@@ -1,3 +1,4 @@
+import { InvalidTypeParamError } from '@/presentation/errors';
 import { Validation } from '@/presentation/protocols';
 import { IsDecimalFieldValidation } from '@/validations';
 
@@ -19,5 +20,15 @@ describe('Is Decimal Validation', () => {
     const validate = sut.validate({ anyField });
     expect(typeof anyField).toBe('string');
     expect(validate).toBe(undefined);
+  });
+
+  test('Ensure return an error if not past two decimal places', async () => {
+    const { sut } = makeSut();
+    const cases = ['1', 1, '1.1', 1.1, '1.111', 1.111];
+
+    for (const anyField of cases) {
+      const validate = sut.validate({ anyField });
+      expect(validate).toEqual(new InvalidTypeParamError('anyField'));
+    }
   });
 });
