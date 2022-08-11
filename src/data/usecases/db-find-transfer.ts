@@ -1,9 +1,4 @@
-import {
-  TransferApi,
-  CreateTransferRepository,
-  FindTransferRepository,
-  UpdateTransferRepository,
-} from '@/data/protocols';
+import { FindTransferRepository } from '@/data/protocols';
 import { FindTransfer } from '@/domain/usecases';
 
 export class DbFindTransfer implements FindTransfer {
