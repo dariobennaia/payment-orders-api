@@ -1,8 +1,8 @@
-export interface Transfer {
-  send: (params: Transfer.Params) => Promise<Transfer.Result>
+export interface PaymentOrder {
+  send: (params: PaymentOrder.Params) => Promise<PaymentOrder.Result>
 }
 
-export namespace Transfer {
+export namespace PaymentOrder {
   export type Params = {
     externalId: string;
     amount: number;
