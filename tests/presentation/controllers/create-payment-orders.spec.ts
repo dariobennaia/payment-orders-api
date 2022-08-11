@@ -1,5 +1,5 @@
 import { Transfer } from '@/domain/usecases';
-import { PaymentOrdersController } from '@/presentation/controllers';
+import { CreatePaymentOrdersController } from '@/presentation/controllers';
 import { internalServerError } from '@/presentation/helpers';
 import { Controller } from '@/presentation/protocols';
 import {
@@ -22,7 +22,7 @@ const makeSut = (): SutType => {
     new ValidationSpy(),
   ];
   const composite = new ValidationComposite(validationsSpy);
-  const sut = new PaymentOrdersController(dbTransferSpy, composite);
+  const sut = new CreatePaymentOrdersController(dbTransferSpy, composite);
   return {
     sut,
     dbTransferSpy,
