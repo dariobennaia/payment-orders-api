@@ -5,7 +5,7 @@ import {
   FindTransferRepository,
   UpdateTransferRepository,
 } from '@/data/protocols';
-import { TransferModel } from '@/domain/models';
+import { fillsTransfer, TransferModel } from '@/domain/models';
 import { MongoHelper } from '@/infra/db/mongo';
 import { ObjectId } from 'mongodb';
 
@@ -14,10 +14,21 @@ implements
     CreateTransferRepository,
     UpdateTransferRepository,
     FindTransferRepository {
+  private sanitizedFills(params: any): any {
+    let result = {};
+    Object.keys(params).forEach((key) => {
+      if (fillsTransfer.includes(key)) {
+        result = { ...result, [key]: params[key] };
+      }
+    });
+    return result;
+  }
+
   async save(params: CreateTransferRepository.Params): Promise<TransferModel> {
     const transferCollection = MongoHelper.getCollection('transfer');
+    const sanitizedFills = this.sanitizedFills(params);
     const data = {
-      ...params,
+      ...sanitizedFills,
       status: [{ name: params.status.name, date: new Date() }],
     };
     const { insertedId } = await transferCollection.insertOne(data);
