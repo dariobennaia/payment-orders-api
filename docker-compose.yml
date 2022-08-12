@@ -1,20 +1,31 @@
 version: '3.7'
 
 services:
+  db:
+    image: mongo:4.4.6
+    container_name: db-mongo
+    ports:
+      - "27017:27017"
+    networks:
+      - teste-pratico-net
+
   api:
     image: btg/teste-pratico
     container_name: api-teste-pratico
+    depends_on:
+      - "db"
     build:
       context: .
       target: build
     env_file: .env
     ports:
       - ${PORT}:${PORT}
-    volumes:
-      - ./:/home/node/app:delegated
     networks:
       - teste-pratico-net
-    command: yarn dev
+    restart: always
+    command: yarn start
+    stdin_open: true
+    tty: true
 
 networks:
   teste-pratico-net:

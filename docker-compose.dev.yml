@@ -1,0 +1,10 @@
+version: '3.7'
+
+services:
+  api:
+    volumes:
+      - ./:/home/node/app:delegated
+    command: yarn dev
+
+networks:
+  teste-pratico-net:

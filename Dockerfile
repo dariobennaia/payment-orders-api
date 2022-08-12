@@ -26,4 +26,4 @@ COPY --from=build /home/node/app/dist/ ./dist/
 ENV NODE_ENV=production \
   PORT=3000
 
-CMD ["node", "dist/server.js"]
+CMD ["node", "dist/main/server.js"]
