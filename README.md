@@ -144,14 +144,21 @@ $ docker-compose up --build
 
 Para executar os testes da aplicação, execute o comando abaixo.
 
+:rotating_light: Importante! Certifique-se de ter executado a etapa de [instalação](#computer-como-usar) e de que o banco de dados esteja em execução, os testes dependem dessa conexão.
+
 ```bash
 # Execute os testes unitário
 $ yarn test
 ```
 
-:rotating_light: Importante! Certifique-se de ter executado a etapa de [instalação](#computer-como-usar) e de que o banco de dados esteja em execução, os testes dependem dessa conexão.
-
 <img src=".github/images/tests.png" alt="tests" />
+
+```bash
+# Veja o coverage da aplicacao
+$ yarn test:cov
+```
+
+<img src=".github/images/test-cov.png" alt="tests-cov" />
 
 ## :clipboard: OpenAPI
 
