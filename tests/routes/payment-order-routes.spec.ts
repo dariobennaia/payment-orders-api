@@ -40,5 +40,16 @@ describe('Payment Orders Routes', () => {
       expect(httpResponse.body.internalId).toBeDefined();
       expect(httpResponse.body.status).toBe('SCHEDULED');
     });
+
+    test('Should return 201 on create payment order', async () => {
+      const { body } = mockRequest();
+      delete body.expectedOn;
+      const httpResponse = await request(app)
+        .post('/paymentOrders')
+        .send(body)
+        .expect(201);
+      expect(httpResponse.body.internalId).toBeDefined();
+      expect(httpResponse.body.status).toBe('CREATED');
+    });
   });
 });
