@@ -1,6 +1,8 @@
 import { MongoHelper } from '@/infra/db';
 import { main } from '@/main/config/app';
 import env from '@/main/config/env';
+import { mockRequest } from '@/tests/presentation/mocks';
+import { faker } from '@faker-js/faker';
 import { Express } from 'express';
 import request from 'supertest';
 
@@ -27,6 +29,14 @@ describe('Payment Orders Routes', () => {
         .post('/paymentOrders')
         .send({})
         .expect(405);
+    });
+
+    test('Should return 201', async () => {
+      const { body } = mockRequest({ expectedOn: faker.date.future() });
+      await request(app)
+        .post('/paymentOrders')
+        .send(body)
+        .expect(201);
     });
   });
 });
