@@ -31,12 +31,14 @@ describe('Payment Orders Routes', () => {
         .expect(405);
     });
 
-    test('Should return 201', async () => {
+    test('Should return 201 on schedule payment order', async () => {
       const { body } = mockRequest({ expectedOn: faker.date.future() });
-      await request(app)
+      const httpResponse = await request(app)
         .post('/paymentOrders')
         .send(body)
         .expect(201);
+      expect(httpResponse.body.internalId).toBeDefined();
+      expect(httpResponse.body.status).toBe('SCHEDULED');
     });
   });
 });
