@@ -152,7 +152,7 @@ $ yarn test
 
 ## :question: Perguntas
 
-Acredito que você possa esta fazendo algumas perguntas, bom, deixa eu ver se eu consigo te responder.
+Acredito que você possa esta se fazendo algumas perguntas, bom, deixa eu ver se eu consigo te responder.
 
 - Por que usar um `SCHEDULE` para fazer o processamento das transferências?
   - O prazo para a entrega do desafio impactou no desenvolvimento de uma solução mais elaborada, fazendo com que outras alternativas fossem buscadas.
