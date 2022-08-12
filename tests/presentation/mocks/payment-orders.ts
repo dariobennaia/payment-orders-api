@@ -5,11 +5,12 @@ type MockRequest = {
   body: CreatePaymentOrder.Params;
 };
 
-export const mockRequest = (): MockRequest => ({
+export const mockRequest = (params = {}): MockRequest => ({
   body: {
     externalId: faker.datatype.uuid(),
     amount: faker.finance.amount(),
     expectedOn: faker.date.past(),
+    ...params,
   },
 });
 
