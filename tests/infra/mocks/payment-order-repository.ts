@@ -5,7 +5,7 @@ export const shufleNewStatus = (): any => ['APPROVED', 'REJECTED'].sort(() => 0.
 
 export const dataCreatePaymentOrderMock = (): CreatePaymentOrderRepository.Params => ({
   externalId: faker.datatype.uuid(),
-  amount: Number(faker.commerce.price()),
+  amount: faker.commerce.price(),
   expectedOn: new Date(),
   status: { name: 'CREATED', date: new Date() },
 });

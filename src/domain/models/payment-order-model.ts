@@ -6,7 +6,7 @@ type StatusPaymentOrder = {
 export type PaymentOrderModel = {
   id: string;
   externalId: string;
-  amount: number;
+  amount: string;
   expectedOn: Date;
   status: StatusPaymentOrder;
 };
@@ -14,7 +14,7 @@ export type PaymentOrderModel = {
 export type PaymentOrderModelResult = {
   id: string;
   externalId: string;
-  amount: number;
+  amount: string;
   expectedOn: Date;
   status: StatusPaymentOrder[];
 };

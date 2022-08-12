@@ -14,7 +14,7 @@ export const resultCreatePaymentOrderRepository = (
 ): PaymentOrderModel => ({
   id: faker.database.mongodbObjectId(),
   status: { name: 'CREATED' },
-  amount: Number(faker.commerce.price()),
+  amount: faker.commerce.price(),
   expectedOn: new Date(),
   externalId: faker.datatype.uuid(),
   ...params,
@@ -23,7 +23,7 @@ export const resultCreatePaymentOrderRepository = (
 export const resultFindPaymentOrderRepository = (): PaymentOrderModelResult => ({
   id: faker.database.mongodbObjectId(),
   status: [{ name: 'CREATED', date: new Date() }],
-  amount: Number(faker.commerce.price()),
+  amount: faker.commerce.price(),
   expectedOn: new Date(),
   externalId: faker.datatype.uuid(),
 });

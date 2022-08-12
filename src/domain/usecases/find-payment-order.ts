@@ -6,7 +6,7 @@ export namespace FindPaymentOrder {
   export type Result = {
     internalId: string;
     externalId: string;
-    amount: number;
+    amount: string;
     expectedOn: Date;
     status: 'CREATED' | 'APPROVED' | 'SCHEDULED' | 'REJECTED';
   }

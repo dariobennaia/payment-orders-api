@@ -5,7 +5,7 @@ export interface CreatePaymentOrder {
 export namespace CreatePaymentOrder {
   export type Params = {
     externalId: string;
-    amount: number;
+    amount: string;
     expectedOn: Date;
   }
 

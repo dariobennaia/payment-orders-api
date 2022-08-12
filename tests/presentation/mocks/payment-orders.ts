@@ -8,7 +8,7 @@ type MockRequest = {
 export const mockRequest = (): MockRequest => ({
   body: {
     externalId: faker.datatype.uuid(),
-    amount: Number(faker.finance.amount()),
+    amount: faker.finance.amount(),
     expectedOn: faker.date.past(),
   },
 });
@@ -33,7 +33,7 @@ export class DbFindPaymentOrderMock implements FindPaymentOrder {
   result: FindPaymentOrder.Result = {
     externalId: faker.datatype.uuid(),
     internalId: faker.datatype.uuid(),
-    amount: Number(faker.finance.amount()),
+    amount: faker.finance.amount(),
     expectedOn: faker.date.past(),
     status: 'CREATED',
   };
