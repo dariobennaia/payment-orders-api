@@ -13,7 +13,7 @@ services:
     image: btg/teste-pratico
     container_name: api-teste-pratico
     depends_on:
-      - "db"
+      - db
     build:
       context: .
       target: build
@@ -24,6 +24,22 @@ services:
       - teste-pratico-net
     restart: always
     command: yarn start
+    stdin_open: true
+    tty: true
+
+  schedule:
+    image: btg/teste-pratico
+    container_name: schedule-teste-pratico
+    depends_on:
+      - api
+    build:
+      context: .
+      target: build
+    env_file: .env
+    networks:
+      - teste-pratico-net
+    restart: always
+    command: yarn schedule
     stdin_open: true
     tty: true
 
