@@ -6,16 +6,33 @@
   <img src=".github/images/mongo.svg" alt="Mongo" />&nbsp;&nbsp;&nbsp;&nbsp;
 </a>
 
-<p align="center">
-  <a href="#rocket-desafio">Desafio</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
-  <a href="#pushpin-funcionalidades">Funcionalidades</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
-  <a href="#triangularruler-arquitetura">Arquitetura</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
-  <a href="#book-padrões">Padrões</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
-  <a href="#hammer-tecnologias">Tecnologias</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
-  <a href="#computer-como-usar">Como usar</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
-  <a href="#sparkles-testes">Testes</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
-  <a href="#question-perguntas">Perguntas</a>&nbsp;&nbsp;&nbsp;
-</p>
+<details open="open">
+  <summary>Sumario</summary>
+  <ol>
+    <li>
+      <a href="#rocket-desafio">Desafio do projeto</a>
+      <ul>
+        <li><a href="#pushpin-funcionalidades">Funcionalidades</a></li>
+      </ul>
+    </li>
+    <li>
+      <a href="#triangularruler-arquitetura">Arquitetura</a>
+      <ul>
+        <li><a href="#book-padrões">Padrões</a></li>
+        <li><a href="#hammer-tecnologias">Tecnologias</a></li>
+      </ul>
+    </li>
+    <li>
+      <a href="#computer-como-usar">Como instalar</a>
+    </li>
+    <li>
+      <a href="#sparkles-testes">Testes</a>
+    </li>
+    <li>
+      <a href="#question-perguntas">Dúvidas e questionamentos</a>
+    </li>
+  </ol>
+</details>
 
 ## :rocket: desafio
 
