@@ -23,27 +23,21 @@ O serviço de Transferência deve receber uma informação opcional de “data d
 ser avaliado para que você não envie transferências vencidas. Além disso todas as operações devem ser
 salvas no BD.
 
-<br/><br/>
-O usuario para acessar a aplicação web caso você tenha executado as `seeds` é:
-
-login: admin@fastfeet.com<br/>
-senha: 123456
-
 ## :pushpin: Funcionalidades
 
 Uma descrição resumida das duas principais funcionalidades presentes na aplicação.
 
-### Criação de transferência
+- Criação de transferência
 
-Funcionalidade responsável por criar ou agendar uma transferência.
+  - Funcionalidade responsável por criar ou agendar uma transferência.
 
-### Consulta de transferência
+- Consulta de transferência
 
-Funcionalidade responsável retornar as informações consultas pelo cliente através de um ID.
+  - Funcionalidade responsável retornar as informações consultas pelo cliente através de um ID.
 
-### Processamento de transferências agendadas (Schedule)
+- Processamento de transferências agendadas (Schedule)
 
-Funcionalidade auxiliar que tem como objetivo processar todas as tranferências sejam elas agendadas ou não, definindo seu status para aprovada (APPROVED) ou rejeitada (REJECTED), conforme a solicitação do desafio.
+  - Funcionalidade auxiliar que tem como objetivo processar todas as tranferências sejam elas agendadas ou não, definindo seu status para aprovada (APPROVED) ou rejeitada (REJECTED), conforme a solicitação do desafio.
 
 ## :hammer: Tecnologias
 
@@ -95,8 +89,6 @@ $ cp .env.example .env
 # Execute o gerenciador do docker para subir a aplicação
 $ docker-compose up
 ```
-
-:rotating_light: Cuidado ao definir 'http://localhost:3000' nas variaveis de ambiente quando usar o docker, o mesmo pode não conseguir se comunicar.
 
 Se precisar buildar as informações novamente basta executar:
 
