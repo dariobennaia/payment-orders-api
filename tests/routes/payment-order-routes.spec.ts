@@ -8,6 +8,15 @@ import request from 'supertest';
 
 let app: Express;
 
+const createPaymentOrder = async (appMock: Express) => {
+  const { body } = mockRequest();
+  delete body.expectedOn;
+  const httpResponse = await request(appMock)
+    .post('/paymentOrders')
+    .send(body);
+  return httpResponse.body;
+};
+
 describe('Payment Orders Routes', () => {
   beforeAll(async () => {
     app = await main();
@@ -50,6 +59,18 @@ describe('Payment Orders Routes', () => {
         .expect(201);
       expect(httpResponse.body.internalId).toBeDefined();
       expect(httpResponse.body.status).toBe('CREATED');
+    });
+  });
+
+  describe('GET /paymentOrders/{internalId}', () => {
+    test('Should return 200 on find payment order', async () => {
+      const { internalId, status } = await createPaymentOrder(app) as any;
+      const httpResponse = await request(app)
+        .get(`/paymentOrders/${internalId}`)
+        .expect(200);
+
+      expect(httpResponse.body.internalId).toBeDefined();
+      expect(httpResponse.body.status).toBe(status);
     });
   });
 });
