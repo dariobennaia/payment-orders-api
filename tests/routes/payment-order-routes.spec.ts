@@ -72,5 +72,12 @@ describe('Payment Orders Routes', () => {
       expect(httpResponse.body.internalId).toBeDefined();
       expect(httpResponse.body.status).toBe(status);
     });
+
+    test('Should return 404 if not found payment order', async () => {
+      const internalId = faker.datatype.uuid();
+      await request(app)
+        .get(`/paymentOrders/${internalId}`)
+        .expect(404);
+    });
   });
 });
