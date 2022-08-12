@@ -29,6 +29,9 @@
       <a href="#sparkles-testes">Testes</a>
     </li>
     <li>
+      <a href="#clipboard-openapi">OpenAPI</a>
+    </li>
+    <li>
       <a href="#question-perguntas">Dúvidas e questionamentos</a>
     </li>
   </ol>
@@ -149,6 +152,18 @@ $ yarn test
 :rotating_light: Importante! Certifique-se de ter executado a etapa de [instalação](#computer-como-usar) e de que o banco de dados esteja em execução, os testes dependem dessa conexão.
 
 <img src=".github/images/tests.png" alt="tests" />
+
+## :clipboard: OpenAPI
+
+Para visualizar o swagger da aplicação, execute o comando abaixo.
+
+```bash
+$ yarn dev
+```
+
+Após o server ter iniciado, em seu navegador execute: http://localhost:3000/api-docs
+
+<img src=".github/images/openapi.png" alt="openapi" />
 
 ## :question: Perguntas
 
