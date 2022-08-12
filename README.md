@@ -65,13 +65,7 @@ Uma descrição resumida das duas principais funcionalidades presentes na aplica
 
 ## :triangular_ruler: Arquitetura
 
-<div>
-  <iframe
-    id="myarch"
-    src="https://miro.com/app/live-embed/uXjVOgkxAK4=/?moveToViewport=-819,-878,1930,947&embedId=132963056639" width="768"
-    height="432">
-  </iframe>
-</div>
+<img src=".github/images/arch.jpeg" alt="arch" />
 
 ## :book: Padrões
 
