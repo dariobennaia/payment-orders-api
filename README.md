@@ -9,8 +9,11 @@
 <p align="center">
   <a href="#rocket-desafio">Desafio</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
   <a href="#pushpin-funcionalidades">Funcionalidades</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+  <a href="#triangularruler-arquitetura">Arquitetura</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+  <a href="#book-padrões">Padrões</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
   <a href="#hammer-tecnologias">Tecnologias</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
   <a href="#computer-como-usar">Como usar</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+  <a href="#sparkles-testes">Testes</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
   <a href="#question-perguntas">Perguntas</a>&nbsp;&nbsp;&nbsp;
 </p>
 
@@ -39,6 +42,19 @@ Uma descrição resumida das duas principais funcionalidades presentes na aplica
 - Processamento de transferências agendadas (Schedule)
 
   - Funcionalidade auxiliar que tem como objetivo processar todas as tranferências sejam elas agendadas ou não, definindo seu status para aprovada (APPROVED) ou rejeitada (REJECTED), conforme a solicitação do desafio.
+
+## :triangular_ruler: Arquitetura
+
+Em breve
+
+## :book: Padrões
+
+- Clean Code
+- Clean Architeture
+- DDD
+- TDD
+- KISS
+- YAGNI
 
 ## :hammer: Tecnologias
 
@@ -73,6 +89,12 @@ $ cp .env.example .env
 $ yarn dev
 ```
 
+:rotating_light: Importante! A execução do schedule é importante para que as transferencias sejam processadas.
+
+```bash
+$ yarn schedule
+```
+
 ### Instalação usando o nosso :heart: amorzinho, o [docker](https://www.docker.com/).
 
 :rotating_light: Importante! Certifique-se de que você possui o docker instalado em sua maquina. A versão usada no desenvolvimento deste projeto foi: [Docker](https://docs.docker.com/engine/release-notes/) e o [Docker Compose](https://docs.docker.com/compose/release-notes/). Para mais informações consulte a [documentação](https://www.docker.com/) oficial.
@@ -97,6 +119,19 @@ Se precisar buildar as informações novamente basta executar:
 # Execute o gerenciador do docker para subir a aplicação
 $ docker-compose up --build
 ```
+
+## :sparkles: Testes
+
+Para executar os testes da aplicação, execute o comando abaixo.
+
+```bash
+# Execute os testes unitário
+$ yarn test
+```
+
+:rotating_light: Importante! Certifique-se de ter executado a etapa de [instalação](#computer-como-usar) e de que o banco de dados esteja em execução, os testes dependem dessa conexão.
+
+<img src=".github/images/tests.png" alt="tests" />
 
 ## :question: Perguntas
 
